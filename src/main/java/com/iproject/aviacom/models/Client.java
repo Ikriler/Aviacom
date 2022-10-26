@@ -1,9 +1,6 @@
 package com.iproject.aviacom.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Client {
@@ -18,6 +15,7 @@ public class Client {
 
     private String patronymic;
 
+    @Column(unique = true)
     private String email;
 
     private String phone;

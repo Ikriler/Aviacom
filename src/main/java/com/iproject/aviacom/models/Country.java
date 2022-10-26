@@ -4,22 +4,23 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-public class Post {
+public class Country {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @Column(unique = true)
     private String name;
 
-    @OneToMany(mappedBy = "post")
-    private List<Employee> employeeList;
+    @OneToMany(mappedBy = "country")
+    List<City> cityList;
 
-    public Post(String name) {
+    public Country(String name) {
         this.name = name;
     }
 
-    public Post() {}
+    public Country() {}
 
     public long getId() {
         return id;
@@ -37,11 +38,11 @@ public class Post {
         this.name = name;
     }
 
-    public List<Employee> getEmployeeList() {
-        return employeeList;
+    public List<City> getCityList() {
+        return cityList;
     }
 
-    public void setEmployeeList(List<Employee> employeeList) {
-        this.employeeList = employeeList;
+    public void setCityList(List<City> cityList) {
+        this.cityList = cityList;
     }
 }

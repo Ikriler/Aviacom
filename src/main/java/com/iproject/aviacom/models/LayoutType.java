@@ -1,25 +1,22 @@
 package com.iproject.aviacom.models;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
-public class Post {
+public class LayoutType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @Column(unique = true)
     private String name;
 
-    @OneToMany(mappedBy = "post")
-    private List<Employee> employeeList;
-
-    public Post(String name) {
+    public LayoutType(String name) {
         this.name = name;
     }
 
-    public Post() {}
+    public LayoutType() {}
 
     public long getId() {
         return id;
@@ -35,13 +32,5 @@ public class Post {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<Employee> getEmployeeList() {
-        return employeeList;
-    }
-
-    public void setEmployeeList(List<Employee> employeeList) {
-        this.employeeList = employeeList;
     }
 }

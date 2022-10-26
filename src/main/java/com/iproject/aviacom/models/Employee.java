@@ -19,6 +19,12 @@ public class Employee {
 
     private String login;
 
+    private String password;
+
+    @ManyToOne
+    @JoinColumn(name = "post_id", referencedColumnName = "id")
+    private Post post;
+
     public Employee(String name, String surname, String patronymic, String phone, String login, String password, Post post) {
         this.name = name;
         this.surname = surname;
@@ -95,9 +101,4 @@ public class Employee {
         this.post = post;
     }
 
-    private String password;
-
-    @ManyToOne
-    @JoinColumn(name = "post_id", referencedColumnName = "id")
-    private Post post;
 }
