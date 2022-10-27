@@ -1,6 +1,7 @@
 package com.iproject.aviacom.models;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Airplane {
@@ -78,4 +79,5 @@ public class Airplane {
     public void setModel(String model) {
         this.model = model;
     }
+
 }

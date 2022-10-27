@@ -30,6 +30,8 @@ public class Voyage {
     @OneToMany(mappedBy = "voyage")
     private List<Ticket> tickets;
 
+
+
     public Voyage(City cityIn, City cityOut, Airplane airplane, Date dateTimeIn, Date dateTimeOut) {
         this.cityIn = cityIn;
         this.cityOut = cityOut;

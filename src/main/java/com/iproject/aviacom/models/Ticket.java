@@ -1,6 +1,7 @@
 package com.iproject.aviacom.models;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Ticket {
@@ -20,6 +21,12 @@ public class Ticket {
     private Double price;
 
     private String seat;
+
+    @OneToMany(mappedBy = "ticket")
+    private List<Booking> bookingList;
+
+    @OneToMany(mappedBy = "ticket")
+    private List<Sale> saleList;
 
     public Ticket(Voyage voyage, SeatClass seatClass, Double price, String seat) {
         this.voyage = voyage;
@@ -68,5 +75,21 @@ public class Ticket {
 
     public void setSeat(String seat) {
         this.seat = seat;
+    }
+
+    public List<Booking> getBookingList() {
+        return bookingList;
+    }
+
+    public void setBookingList(List<Booking> bookingList) {
+        this.bookingList = bookingList;
+    }
+
+    public List<Sale> getSaleList() {
+        return saleList;
+    }
+
+    public void setSaleList(List<Sale> saleList) {
+        this.saleList = saleList;
     }
 }

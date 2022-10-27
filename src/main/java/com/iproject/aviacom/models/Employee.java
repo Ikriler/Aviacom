@@ -1,6 +1,7 @@
 package com.iproject.aviacom.models;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Employee {
@@ -24,6 +25,12 @@ public class Employee {
     @ManyToOne
     @JoinColumn(name = "post_id", referencedColumnName = "id")
     private Post post;
+
+    @OneToMany(mappedBy = "employee")
+    private List<Booking> bookingList;
+
+    @OneToMany(mappedBy = "employee")
+    private List<Sale> saleList;
 
     public Employee(String name, String surname, String patronymic, String phone, String login, String password, Post post) {
         this.name = name;
@@ -101,4 +108,19 @@ public class Employee {
         this.post = post;
     }
 
+    public List<Booking> getBookingList() {
+        return bookingList;
+    }
+
+    public void setBookingList(List<Booking> bookingList) {
+        this.bookingList = bookingList;
+    }
+
+    public List<Sale> getSaleList() {
+        return saleList;
+    }
+
+    public void setSaleList(List<Sale> saleList) {
+        this.saleList = saleList;
+    }
 }

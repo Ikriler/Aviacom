@@ -2,9 +2,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="/static/css/main.css">
     <title>Главная</title>
 </head>
 <body>
-  main
+<div class="formContainer h-100 d-flex align-items-center">
+    <form class="form-horizontal d-flex flex-row align-items-center justify-content-around findForm">
+        <select class="form-select"></select>
+        <select class="form-select "></select>
+        <input type="date" class="form-control">
+        <input type="date" class="form-control">
+        <input type="submit" value="Найти билеты" class="btn btn-primary">
+    </form>
+</div>
 </body>
 </html>

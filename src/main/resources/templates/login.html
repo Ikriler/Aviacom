@@ -1,24 +1,30 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
-    <link rel="stylesheet" th:href="@{/bootstrap/bootstrap.css}">
+    <link rel="stylesheet" href="static/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="static/css/login.css">
     <title>Please Log In</title>
 </head>
-<body>
-<h1>Please Log In</h1>
-<div th:if="${param.error}">
-    Invalid username and password.
-</div>
-<div th:if="${param.logout}">
-    You have been logged out.
-</div>
-<form th:action="@{/login}" method="post">
-    <div>
-        <input type="text" name="username" placeholder="Username"/>
+<body class="d-flex align-items-center justify-content-center">
+<div class="container-fluid d-flex flex-column align-items-center">
+    <h1 class="text-white">Please Log In</h1>
+    <div class="text-white" th:if="${param.error}">
+        Invalid username and password.
     </div>
-    <div>
-        <input type="password" name="password" placeholder="Password"/>
+    <div class="text-white" th:if="${param.logout}">
+        You have been logged out.
     </div>
-    <input type="submit" value="Log in"/>
-</form>
+    <form th:action="@{/login}" method="post" class="form">
+        <div class="mb-2">
+            <input type="text" name="username" placeholder="Username" class="form-control"/>
+        </div>
+        <div class="mb-2">
+            <input type="password" name="password" placeholder="Password" class="form-control"/>
+        </div>
+        <div class="d-flex justify-content-between">
+            <input type="submit" value="Войти" class="btn btn-primary"/>
+            <a class="btn btn-primary" href="/registration">Регистрация</a>
+        </div>
+    </form>
+</div>
 </body>

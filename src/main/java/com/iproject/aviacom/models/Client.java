@@ -1,5 +1,7 @@
 package com.iproject.aviacom.models;
 
+import java.util.List;
+
 import javax.persistence.*;
 
 @Entity
@@ -25,6 +27,12 @@ public class Client {
     private String passportNumber;
 
     private String password;
+
+    @OneToMany(mappedBy = "client")
+    private List<Booking> bookingList;
+
+    @OneToMany(mappedBy = "client")
+    private List<Sale> saleList;
 
     public Client(String name, String surname, String patronymic, String email, String phone, String passportSeries, String passportNumber, String password) {
         this.name = name;
@@ -109,5 +117,21 @@ public class Client {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Booking> getBookingList() {
+        return bookingList;
+    }
+
+    public void setBookingList(List<Booking> bookingList) {
+        this.bookingList = bookingList;
+    }
+
+    public List<Sale> getSaleList() {
+        return saleList;
+    }
+
+    public void setSaleList(List<Sale> saleList) {
+        this.saleList = saleList;
     }
 }

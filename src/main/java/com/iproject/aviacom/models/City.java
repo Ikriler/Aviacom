@@ -1,6 +1,7 @@
 package com.iproject.aviacom.models;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class City {
@@ -58,4 +59,5 @@ public class City {
     public void setCountry(Country country) {
         this.country = country;
     }
+
 }

@@ -1,9 +1,7 @@
 package com.iproject.aviacom.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class SeatClass {
@@ -15,6 +13,9 @@ public class SeatClass {
     private String name;
 
     private Double price;
+
+    @OneToMany(mappedBy = "seatClass")
+    private List<Ticket> ticketList;
 
     public SeatClass(long id, String name, Double price) {
         this.id = id;
@@ -46,5 +47,13 @@ public class SeatClass {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public List<Ticket> getTicketList() {
+        return ticketList;
+    }
+
+    public void setTicketList(List<Ticket> ticketList) {
+        this.ticketList = ticketList;
     }
 }

@@ -1,6 +1,7 @@
 package com.iproject.aviacom.models;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class LayoutType {
@@ -11,6 +12,9 @@ public class LayoutType {
 
     @Column(unique = true)
     private String name;
+
+    @OneToMany(mappedBy = "layoutType")
+    private List<Airplane> airplaneList;
 
     public LayoutType(String name) {
         this.name = name;
@@ -32,5 +36,13 @@ public class LayoutType {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Airplane> getAirplaneList() {
+        return airplaneList;
+    }
+
+    public void setAirplaneList(List<Airplane> airplaneList) {
+        this.airplaneList = airplaneList;
     }
 }

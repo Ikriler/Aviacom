@@ -24,6 +24,8 @@ public class Sale {
 
     private Date saleDate;
 
+
+
     public Sale(Client client, Ticket ticket, Employee employee, Date saleDate) {
         this.client = client;
         this.ticket = ticket;
