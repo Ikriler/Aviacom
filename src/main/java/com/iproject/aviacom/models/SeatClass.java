@@ -17,8 +17,7 @@ public class SeatClass {
     @OneToMany(mappedBy = "seatClass")
     private List<Ticket> ticketList;
 
-    public SeatClass(long id, String name, Double price) {
-        this.id = id;
+    public SeatClass(String name, Double price) {
         this.name = name;
         this.price = price;
     }
