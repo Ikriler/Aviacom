@@ -12,8 +12,8 @@ public class Voyage {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "city_in_id", referencedColumnName = "id")
-    private City cityIn;
+    @JoinColumn(name = "city_inc_id", referencedColumnName = "id")
+    private City cityInc;
 
     @ManyToOne
     @JoinColumn(name = "city_out_id", referencedColumnName = "id")
@@ -23,7 +23,7 @@ public class Voyage {
     @JoinColumn(name = "airplane_id", referencedColumnName = "id")
     private Airplane airplane;
 
-    private Date dateTimeIn;
+    private Date dateTimeInc;
 
     private Date dateTimeOut;
 
@@ -32,11 +32,11 @@ public class Voyage {
 
 
 
-    public Voyage(City cityIn, City cityOut, Airplane airplane, Date dateTimeIn, Date dateTimeOut) {
-        this.cityIn = cityIn;
+    public Voyage(City cityInc, City cityOut, Airplane airplane, Date dateTimeInc, Date dateTimeOut) {
+        this.cityInc = cityInc;
         this.cityOut = cityOut;
         this.airplane = airplane;
-        this.dateTimeIn = dateTimeIn;
+        this.dateTimeInc = dateTimeInc;
         this.dateTimeOut = dateTimeOut;
     }
 
@@ -50,12 +50,12 @@ public class Voyage {
         this.id = id;
     }
 
-    public City getCityIn() {
-        return cityIn;
+    public City getCityInc() {
+        return cityInc;
     }
 
-    public void setCityIn(City cityIn) {
-        this.cityIn = cityIn;
+    public void setCityInc(City cityInc) {
+        this.cityInc = cityInc;
     }
 
     public City getCityOut() {
@@ -74,12 +74,12 @@ public class Voyage {
         this.airplane = airplane;
     }
 
-    public Date getDateTimeIn() {
-        return dateTimeIn;
+    public Date getDateTimeInc() {
+        return dateTimeInc;
     }
 
-    public void setDateTimeIn(Date dateTimeIn) {
-        this.dateTimeIn = dateTimeIn;
+    public void setDateTimeInc(Date dateTimeInc) {
+        this.dateTimeInc = dateTimeInc;
     }
 
     public Date getDateTimeOut() {

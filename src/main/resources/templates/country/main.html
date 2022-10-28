@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="/static/css/country/main.css">
+    <title>Страны</title>
+</head>
+<body>
+<div th:insert="components/header"></div>
+
+<div class="d-flex flex-column align-items-center justify-content-center mt-3">
+    <form method="post" th:action="@{/country/add}"
+          class="form-horizontal d-flex flex-column align-items-center justify-content-center col-sm-4"
+          th:object="${country}">
+        <div class="form-horizontal d-flex flex-row align-items-center justify-content-center">
+            <input placeholder="Название страны" type="text" class="form-control name" name="name" th:field="*{name}"/>
+            <input type="submit" value="Добавить" class="btn btn-success">
+        </div>
+        <span class="error text-danger" th:if="${message != null}" th:text="${message}"></span>
+        <span class="error text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+    </form>
+    <p class="display-5 p-2">Список стран</p>
+</div>
+
+<search class="d-flex flex-column align-items-center mt-3">
+    <form method="get" th:action="@{/country}"
+          class="form-horizontal d-flex flex-row align-items-center justify-content-center col-sm-3">
+        <input placeholder="Название страны" class="form-control search" name="search">
+        <input value="Поиск" type="submit" class="btn btn-primary">
+    </form>
+</search>
+
+<div class="d-flex flex-column align-items-center justify-content-center mt-3">
+    <div class="col-sm-6">
+        <table class="table table-bordered">
+            <tr th:each="c : ${countries}">
+                <form>
+                    <input type="hidden" name="country_id" th:value="${c.id}">
+                    <td scope="col" class="text-center"><span class="h3" th:text="${c.name}"></span></td>
+                    <td scope="col" class="text-center"><input type="submit" value="Удалить" class="btn btn-danger ml-2"
+                                                               th:formaction="@{/country/delete}" formmethod="post">
+                    </td>
+                    <td scope="col" class="text-center"><input type="submit" value="Редактировать"
+                                                               th:formaction="@{/country/edit}" formmethod="get"
+                                                               class="btn btn-primary ml-2"></td>
+                </form>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>
