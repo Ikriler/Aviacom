@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="/static/bootstrap/bootstrap.css">
+    <title>Города</title>
+</head>
+<body>
+<div th:insert="components/header"></div>
+
+<div class="d-flex flex-column align-items-center justify-content-center mt-3">
+    <p class="display-5 p-2">Добавление города</p>
+    <form method="post" th:action="@{/city/add}"
+          class="form col-sm-3"
+          th:object="${city}">
+        <div class="form-group mt-2">
+            <label>Название города</label>
+            <input placeholder="Название города" type="text" class="form-control" name="name" th:field="*{name}"/>
+        </div>
+        <span class="error text-danger" th:if="${message != null}" th:text="${message}"></span>
+        <span class="error text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+
+        <div class="form-group mt-2">
+            <label>Описание</label>
+            <input placeholder="Описание" type="text" class="form-control mt-2" th:field="*{description}">
+        </div>
+        <span class="error text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+
+        <div class="form-group mt-2">
+            <label>Страна</label>
+            <select class="form-select mt-2" th:field="*{country}">
+                <option th:each="c : ${countries}" th:value="${c.id}" th:text="${c.name}">
+                </option>
+            </select>
+        </div>
+        <span class="error text-danger" th:if="${#fields.hasErrors('country')}" th:errors="*{country}"></span>
+
+        <input type="submit" value="Добавить" class="btn btn-success mt-2">
+    </form>
+</div>
+</body>
+</html>

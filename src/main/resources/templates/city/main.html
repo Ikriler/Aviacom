@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="/static/css/city/main.css">
+    <title>Города</title>
+</head>
+<body>
+<div th:insert="components/header"></div>
+
+<div class="d-flex flex-column align-items-center justify-content-center mt-3">
+    <form method="get" th:action="@{/city/add}"
+          class="form-horizontal d-flex flex-column align-items-center justify-content-center col-sm-4">
+        <input type="submit" value="Добавить город" class="btn btn-success">
+    </form>
+</div>
+
+<search class="d-flex flex-column align-items-center mt-3">
+    <p class="display-5 p-2">Список городов</p>
+    <form method="get" th:action="@{/city}"
+          class="form-horizontal d-flex flex-row align-items-center justify-content-center col-sm-3">
+        <input placeholder="Название города" class="form-control search" name="search">
+        <input value="Поиск" type="submit" class="btn btn-primary">
+    </form>
+</search>
+
+<div class="d-flex flex-column align-items-center justify-content-center mt-3">
+    <div class="col-sm-6">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col" class="text-center">Название</th>
+                    <th scope="col" class="text-center">Описание</th>
+                    <th scope="col" class="text-center">Страна</th>
+                    <th scope="col" class="text-center">Удалить</th>
+                    <th scope="col" class="text-center">Редактировать</th>
+                </tr>
+            </thead>
+            <tr th:each="c : ${cities}">
+                <form>
+                    <input type="hidden" name="city_id" th:value="${c.id}">
+                    <td scope="col" class="text-center"><span class="h3" th:text="${c.name}"></span></td>
+                    <td scope="col" class="text-center"><span class="h3" th:text="${c.description}"></span></td>
+                    <td scope="col" class="text-center"><span class="h3" th:text="${c.getCountry().getName()}"></span></td>
+                    <td scope="col" class="text-center"><input type="submit" value="Удалить" class="btn btn-danger ml-2"
+                                                               th:formaction="@{/city/delete}" formmethod="post">
+                    </td>
+                    <td scope="col" class="text-center"><input type="submit" value="Редактировать"
+                                                               th:formaction="@{/city/edit}" formmethod="get"
+                                                               class="btn btn-primary ml-2"></td>
+                </form>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>

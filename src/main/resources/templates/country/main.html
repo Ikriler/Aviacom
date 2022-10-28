@@ -34,6 +34,13 @@
 <div class="d-flex flex-column align-items-center justify-content-center mt-3">
     <div class="col-sm-6">
         <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th scope="col" class="text-center">Название</th>
+                <th scope="col" class="text-center">Удалить</th>
+                <th scope="col" class="text-center">Редактировать</th>
+            </tr>
+            </thead>
             <tr th:each="c : ${countries}">
                 <form>
                     <input type="hidden" name="country_id" th:value="${c.id}">
