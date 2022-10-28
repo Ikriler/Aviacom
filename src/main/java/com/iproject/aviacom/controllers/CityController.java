@@ -25,10 +25,9 @@ public class CityController {
 
     @GetMapping
     public String cityList(@RequestParam(required = false) String search, Model model) {
-        if(search != null && search != "") {
+        if (search != null && search != "") {
             model.addAttribute("cities", cityRepository.findByNameContains(search));
-        }
-        else {
+        } else {
             model.addAttribute("cities", cityRepository.findAll());
         }
         return "city/main";
@@ -44,11 +43,11 @@ public class CityController {
     public String cityAdd(@ModelAttribute("city") @Valid City city, BindingResult bindingResult, Model model) {
         City dbCity = cityRepository.findByName(city.getName());
         model.addAttribute("countries", countryRepository.findAll());
-        if(dbCity != null) {
+        if (dbCity != null) {
             model.addAttribute("message", "Город с таким названием уже существует");
             return "city/add";
         }
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             return "city/add";
         }
         cityRepository.save(city);
@@ -79,11 +78,11 @@ public class CityController {
     public String cityEdit(@ModelAttribute("city") @Valid City city, BindingResult bindingResult, Model model) {
         City dbCity = cityRepository.findByName(city.getName());
         model.addAttribute("countries", countryRepository.findAll());
-        if(dbCity != null && dbCity.getId() != city.getId()) {
+        if (dbCity != null && dbCity.getId() != city.getId()) {
             model.addAttribute("message", "Город с таким названием уже существует");
             return "city/edit";
         }
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             return "city/edit";
         }
         cityRepository.save(city);

@@ -1,6 +1,7 @@
 package com.iproject.aviacom.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Entity
@@ -10,10 +11,12 @@ public class City {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @NotBlank(message = "Поле не должно быть пустым")
     @Column(unique = true)
     private String name;
 
     @Lob
+    @NotBlank(message = "Поле не должно быть пустым")
     private String description;
 
     @ManyToOne

@@ -10,6 +10,7 @@ public class Airplane {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @Column(unique = true)
     private String model;
 
     private int firstClassClientsCount;
