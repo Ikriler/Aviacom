@@ -27,9 +27,9 @@ public class ClientController {
                            @RequestParam(required = false) String searchSurname,
                            @RequestParam(required = false) String searchPatronymic, Model model) {
         if(searchName != null || searchPatronymic != null || searchSurname != null) {
-            searchName = searchName == null ? "" : searchName;
-            searchPatronymic = searchPatronymic == null ? "" : searchPatronymic;
-            searchSurname = searchSurname == null ? "" : searchSurname;
+            searchName = searchName == null || searchName == "" ? "_" : searchName;
+            searchPatronymic = searchPatronymic == null || searchPatronymic == "" ? "_" : searchPatronymic;
+            searchSurname = searchSurname == null || searchSurname == "" ? "_" : searchSurname;
             model.addAttribute("clients", clientRepository.findByNameContainsOrSurnameContainsOrPatronymicContains(searchName, searchSurname, searchPatronymic));
         }
         else {

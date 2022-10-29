@@ -27,7 +27,7 @@ public class Voyage {
 
     private Date dateTimeOut;
 
-    @OneToMany(mappedBy = "voyage", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "voyage", cascade = CascadeType.ALL)
     private List<Ticket> tickets;
 
 

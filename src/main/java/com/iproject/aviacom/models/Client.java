@@ -28,10 +28,10 @@ public class Client {
 
     private String password;
 
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private List<Booking> bookingList;
 
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private List<Sale> saleList;
 
     public Client(String name, String surname, String patronymic, String email, String phone, String passportSeries, String passportNumber, String password) {
