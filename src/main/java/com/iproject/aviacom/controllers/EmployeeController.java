@@ -26,7 +26,7 @@ public class EmployeeController {
     ClientRepository clientRepository;
 
     @GetMapping
-    public String employee(@RequestParam(required = false) String searchName,
+    public String employeeList(@RequestParam(required = false) String searchName,
             @RequestParam(required = false) String searchSurname,
             @RequestParam(required = false) String searchPatronymic, Model model) {
         if(searchName != null || searchPatronymic != null || searchSurname != null) {
@@ -87,7 +87,13 @@ public class EmployeeController {
     @PostMapping("/edit")
     public String employeeEdit(@ModelAttribute("employee") @Valid Employee employee, BindingResult bindingResult, @RequestParam(required = false) String new_password, Model model) {
         model.addAttribute("posts", postRepository.findAll());
-        Employee dbEmployee = employeeRepository.findById(employee.getId()).get();
+        Employee dbEmployee = employeeRepository.findByLogin(employee.getLogin());
+        Client dbClient = clientRepository.findByEmail(employee.getLogin());
+        if((dbEmployee != null && dbEmployee.getId() != employee.getId()) || dbClient != null) {
+            model.addAttribute("message","Такой логин уже существует");
+            return "employee/edit";
+        }
+        dbEmployee = employeeRepository.findById(employee.getId()).get();
         if(bindingResult.hasErrors()) {
             return "employee/edit";
         }
@@ -99,6 +105,7 @@ public class EmployeeController {
         dbEmployee.setPatronymic(employee.getPatronymic());
         dbEmployee.setPhone(employee.getPhone());
         dbEmployee.setPost(employee.getPost());
+        dbEmployee.setLogin(employee.getLogin());
         employeeRepository.save(dbEmployee);
         return "redirect:/employee";
     }
