@@ -45,7 +45,7 @@
             </thead>
             <tr th:each="c : ${clients}">
                 <form>
-                    <input type="hidden" name="employee_id" th:value="${c.id}">
+                    <input type="hidden" name="client_id" th:value="${c.id}">
                     <td scope="col" class="text-center"><span class="h3" th:text="${c.name}"></span></td>
                     <td scope="col" class="text-center"><span class="h3" th:text="${c.surname}"></span></td>
                     <td scope="col" class="text-center"><span class="h3" th:text="${c.patronymic}"></span></td>

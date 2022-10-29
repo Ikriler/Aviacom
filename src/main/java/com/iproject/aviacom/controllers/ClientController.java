@@ -93,9 +93,9 @@ public class ClientController {
         if(new_password != null && new_password != "") {
             dbClient.setPassword(new BCryptPasswordEncoder().encode(new_password));
         }
-        dbClient.setName(dbClient.getName());
-        dbClient.setSurname(dbClient.getSurname());
-        dbClient.setPatronymic(dbClient.getPatronymic());
+        dbClient.setName(client.getName());
+        dbClient.setSurname(client.getSurname());
+        dbClient.setPatronymic(client.getPatronymic());
         dbClient.setPhone(client.getPhone());
         dbClient.setEmail(client.getEmail());
         dbClient.setPassportNumber(client.getPassportNumber());
