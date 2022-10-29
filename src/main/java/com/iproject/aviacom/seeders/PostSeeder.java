@@ -11,11 +11,11 @@ public class PostSeeder {
     private static List<Post> postList = new ArrayList<>();
 
     private static void init() {
-        postList.add(new Post("ADMIN"));
-        postList.add(new Post("CASHIER"));
-        postList.add(new Post("AIRDROME"));
-        postList.add(new Post("BOOKING"));
-        postList.add(new Post("PERSONNEL"));
+        postList.add(new Post("ADMIN", "Админ"));
+        postList.add(new Post("CASHIER", "Кассир"));
+        postList.add(new Post("AIRDROME", "Диспетчер"));
+        postList.add(new Post("BOOKING", "Агент бронирования"));
+        postList.add(new Post("PERSONNEL", "Кадровик"));
     }
 
     public static void seed(PostRepository postRepository) {

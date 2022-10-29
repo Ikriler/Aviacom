@@ -12,11 +12,14 @@ public class Post {
 
     private String name;
 
+    private String alias;
+
     @OneToMany(mappedBy = "post")
     private List<Employee> employeeList;
 
-    public Post(String name) {
+    public Post(String name, String alias) {
         this.name = name;
+        this.alias = alias;
     }
 
     public Post() {}
@@ -43,5 +46,13 @@ public class Post {
 
     public void setEmployeeList(List<Employee> employeeList) {
         this.employeeList = employeeList;
+    }
+
+    public String getAlias() {
+        return alias;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
     }
 }

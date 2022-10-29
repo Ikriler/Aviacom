@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/bootstrap/bootstrap.css">
+    <title>Сотрудники</title>
+</head>
+<body>
+<div th:insert="components/header"></div>
+
+
+<div class="d-flex flex-column align-items-center justify-content-center mt-3">
+    <p class="display-5 p-2">Добавление сотрудника</p>
+    <form method="post" th:action="@{/employee/add}"
+          class="form col-sm-3"
+          th:object="${employee}">
+
+        <div class="form-group mt-2">
+            <label>Имя</label>
+            <input placeholder="Имя" type="text" class="form-control mt-2" th:field="*{name}">
+        </div>
+        <span class="error text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+
+        <div class="form-group mt-2">
+            <label>Фамилия</label>
+            <input placeholder="Фамилия" type="text" class="form-control mt-2" th:field="*{surname}">
+        </div>
+        <span class="error text-danger" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></span>
+
+        <div class="form-group mt-2">
+            <label>Отчество</label>
+            <input placeholder="Отчество" type="text" class="form-control mt-2" th:field="*{patronymic}">
+        </div>
+        <span class="error text-danger" th:if="${#fields.hasErrors('patronymic')}" th:errors="*{patronymic}"></span>
+
+        <div class="form-group mt-2">
+            <label>Номер телефона</label>
+            <input placeholder="Номер телефона" type="text" class="form-control mt-2" th:field="*{phone}">
+        </div>
+        <span class="error text-danger" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
+
+        <div class="form-group mt-2">
+            <label>Должность</label>
+            <select class="form-select mt-2" th:field="*{post}">
+                <option th:each="p : ${posts}" th:value="${p.id}" th:text="${p.alias}">
+                </option>
+            </select>
+        </div>
+        <span class="error text-danger" th:if="${#fields.hasErrors('post')}" th:errors="*{post}"></span>
+
+        <div class="form-group mt-2">
+            <label>Логин</label>
+            <input placeholder="Логин" type="text" class="form-control" th:field="*{login}"/>
+        </div>
+        <span class="error text-danger" th:if="${message != null}" th:text="${message}"></span>
+        <span class="error text-danger" th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></span>
+
+        <div class="form-group mt-2">
+            <label>Пароль</label>
+            <input placeholder="Пароль" type="text" class="form-control" th:field="*{password}"/>
+        </div>
+        <span class="error text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+
+        <input type="submit" value="Добавить" class="btn btn-success mt-2">
+    </form>
+</div>
+
+</body>
+</html>

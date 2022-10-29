@@ -22,10 +22,10 @@ public class Ticket {
 
     private String seat;
 
-    @OneToMany(mappedBy = "ticket")
+    @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Booking> bookingList;
 
-    @OneToMany(mappedBy = "ticket")
+    @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Sale> saleList;
 
     public Ticket(Voyage voyage, SeatClass seatClass, Double price, String seat) {
