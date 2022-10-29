@@ -49,10 +49,10 @@ public class ClientController {
         Employee dbEmployee = employeeRepository.findByLogin(client.getEmail());
         if(dbClient != null || dbEmployee != null) {
             model.addAttribute("message","Такая почта уже существует");
-            return "employee/add";
+            return "client/add";
         }
         if(bindingResult.hasErrors()) {
-            return "employee/add";
+            return "client/add";
         }
         client.setPassword(new BCryptPasswordEncoder().encode(client.getPassword()));
         clientRepository.save(client);

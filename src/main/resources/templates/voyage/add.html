@@ -1,10 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" href="/static/bootstrap/bootstrap.css">
+    <title>Рейсы</title>
 </head>
 <body>
+<div th:insert="components/header"></div>
 
+<div class="d-flex flex-column align-items-center justify-content-center mt-3">
+    <p class="display-5 p-2">Добавление рейса</p>
+    <form method="post" th:action="@{/voyage/add}"
+          class="form col-sm-3"
+          th:object="${voyage}">
+
+        <div class="form-group mt-2">
+            <label>Город отправления</label>
+            <select class="form-select mt-2" th:field="*{cityInc}">
+                <option th:each="c : ${cities}" th:value="${c.id}" th:text="${c.name}">
+                </option>
+            </select>
+        </div>
+        <span class="error text-danger" th:if="${#fields.hasErrors('cityInc')}" th:errors="*{cityInc}"></span>
+
+        <div class="form-group mt-2">
+            <label>Дата/Время отправления</label>
+            <div class="d-flex flex-row">
+                <input type="date" class="form-control" name="dateInc" th:value="${dateInc}">
+                <input type="time" class="form-control" name="timeInc" th:value="${timeInc}">
+            </div>
+        </div>
+        <span class="error text-danger" th:if="${dateTimeIncMessage != null}" th:text="${dateTimeIncMessage}"></span>
+
+        <div class="form-group mt-2">
+            <label>Город прибытия</label>
+            <select class="form-select mt-2" th:field="*{cityOut}">
+                <option th:each="c : ${cities}" th:value="${c.id}" th:text="${c.name}">
+                </option>
+            </select>
+        </div>
+        <span class="error text-danger" th:if="${#fields.hasErrors('cityOut')}" th:errors="*{cityOut}"></span>
+
+        <div class="form-group mt-2">
+            <label>Дата/Время прибытия</label>
+            <div class="d-flex flex-row">
+                <input type="date" class="form-control" name="dateOut" th:value="${dateOut}">
+                <input type="time" class="form-control" name="timeOut" th:value="${timeOut}">
+            </div>
+        </div>
+        <span class="error text-danger" th:if="${dateTimeOutMessage != null}" th:text="${dateTimeOutMessage}"></span>
+
+        <div class="form-group mt-2">
+            <label>Самолёт</label>
+            <select class="form-select mt-2" th:field="*{airplane}">
+                <option th:each="a : ${airplanes}" th:value="${a.id}" th:text="${a.model}">
+                </option>
+            </select>
+        </div>
+        <span class="error text-danger" th:if="${#fields.hasErrors('airplane')}" th:errors="*{airplane}"></span>
+
+        <input type="submit" value="Добавить" class="btn btn-success mt-2">
+    </form>
+</div>
 </body>
 </html>

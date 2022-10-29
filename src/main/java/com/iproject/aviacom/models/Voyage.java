@@ -23,16 +23,18 @@ public class Voyage {
     @JoinColumn(name = "airplane_id", referencedColumnName = "id")
     private Airplane airplane;
 
-    private Date dateTimeInc;
 
-    private Date dateTimeOut;
+    private String dateTimeInc;
+
+
+    private String dateTimeOut;
 
     @OneToMany(mappedBy = "voyage", cascade = CascadeType.ALL)
     private List<Ticket> tickets;
 
 
 
-    public Voyage(City cityInc, City cityOut, Airplane airplane, Date dateTimeInc, Date dateTimeOut) {
+    public Voyage(City cityInc, City cityOut, Airplane airplane, String dateTimeInc, String dateTimeOut) {
         this.cityInc = cityInc;
         this.cityOut = cityOut;
         this.airplane = airplane;
@@ -74,19 +76,19 @@ public class Voyage {
         this.airplane = airplane;
     }
 
-    public Date getDateTimeInc() {
+    public String getDateTimeInc() {
         return dateTimeInc;
     }
 
-    public void setDateTimeInc(Date dateTimeInc) {
+    public void setDateTimeInc(String dateTimeInc) {
         this.dateTimeInc = dateTimeInc;
     }
 
-    public Date getDateTimeOut() {
+    public String getDateTimeOut() {
         return dateTimeOut;
     }
 
-    public void setDateTimeOut(Date dateTimeOut) {
+    public void setDateTimeOut(String dateTimeOut) {
         this.dateTimeOut = dateTimeOut;
     }
 }
