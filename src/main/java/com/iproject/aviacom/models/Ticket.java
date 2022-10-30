@@ -22,11 +22,11 @@ public class Ticket {
 
     private String seat;
 
-    @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL)
-    private List<Booking> bookingList;
+    @OneToOne(optional = true, mappedBy = "ticket")
+    private Booking booking;
 
-    @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL)
-    private List<Sale> saleList;
+    @OneToOne(optional = true, mappedBy = "ticket")
+    private Sale sale;
 
     public Ticket(Voyage voyage, SeatClass seatClass, Double price, String seat) {
         this.voyage = voyage;
@@ -77,19 +77,19 @@ public class Ticket {
         this.seat = seat;
     }
 
-    public List<Booking> getBookingList() {
-        return bookingList;
+    public Booking getBooking() {
+        return booking;
     }
 
-    public void setBookingList(List<Booking> bookingList) {
-        this.bookingList = bookingList;
+    public void setBooking(Booking booking) {
+        this.booking = booking;
     }
 
-    public List<Sale> getSaleList() {
-        return saleList;
+    public Sale getSale() {
+        return sale;
     }
 
-    public void setSaleList(List<Sale> saleList) {
-        this.saleList = saleList;
+    public void setSale(Sale sale) {
+        this.sale = sale;
     }
 }

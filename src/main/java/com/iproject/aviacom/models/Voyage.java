@@ -29,7 +29,7 @@ public class Voyage {
 
     private String dateTimeOut;
 
-    @OneToMany(mappedBy = "voyage", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "voyage", cascade = CascadeType.REMOVE)
     private List<Ticket> tickets;
 
 
@@ -90,5 +90,13 @@ public class Voyage {
 
     public void setDateTimeOut(String dateTimeOut) {
         this.dateTimeOut = dateTimeOut;
+    }
+
+    public List<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<Ticket> tickets) {
+        this.tickets = tickets;
     }
 }

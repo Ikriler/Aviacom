@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="/static/css/ticket/main.css">
+    <title>Билеты</title>
+</head>
+<body>
+<div th:insert="components/header"></div>
+
+<div class="d-flex flex-column align-items-center justify-content-center mt-3">
+    <form method="get" th:action="@{/ticket/add}"
+          class="form-horizontal d-flex flex-column align-items-center justify-content-center col-sm-4">
+        <input type="submit" value="Добавить билеты" class="btn btn-success">
+    </form>
+    <span class="error text-danger" th:if="${message != null}" th:text="${message}"></span>
+</div>
+
+<search class="d-flex flex-column align-items-center mt-3">
+    <p class="display-5 p-2">Список билетов</p>
+    <form class="form-horizontal d-flex flex-row align-items-center justify-content-center col-sm-6">
+        <div class="form-group mt-2 right">
+            <label>Номер рейса</label>
+            <select class="form-select mt-2" name="voyage">
+                <option th:each="v : ${voyages}" th:value="${v.id}" th:text="${v.id}">
+                </option>
+            </select>
+        </div>
+        <div class="form-group mt-2 right">
+            <input value="Поиск" type="submit" class="btn btn-primary search" th:formaction="@{/ticket}" formmethod="get">
+        </div>
+        <div class="form-group mt-2 right">
+            <input value="Редактировать билеты" type="submit" class="btn btn-primary search" th:formaction="@{/ticket/edit}" formmethod="get">
+        </div>
+        <div class="form-group mt-2">
+            <input value="Удалить билеты" type="submit" class="btn btn-danger search" th:formaction="@{/ticket/delete}" formmethod="post">
+        </div>
+    </form>
+</search>
+
+<div class="d-flex flex-column align-items-center justify-content-center mt-3">
+    <div class="col-sm-10">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th scope="col" class="text-center">Стоимость</th>
+                <th scope="col" class="text-center">Номер рейса</th>
+                <th scope="col" class="text-center">Класс места</th>
+                <th scope="col" class="text-center">Место</th>
+                <th scope="col" class="text-center">Город отправления</th>
+                <th scope="col" class="text-center">Город прибытия</th>
+                <th scope="col" class="text-center">Дата отправления</th>
+                <th scope="col" class="text-center">Дата прибытия</th>
+            </tr>
+            </thead>
+            <tr th:each="t : ${tickets}">
+                <form>
+                    <input type="hidden" name="ticket_id" th:value="${t.id}">
+                    <td scope="col" class="text-center"><span class="h3" th:text="${t.price}"></span></td>
+                    <td scope="col" class="text-center"><span class="h3" th:text="${t.voyage.id}"></span></td>
+                    <td scope="col" class="text-center"><span class="h3" th:text="${t.seatClass.name}"></span></td>
+                    <td scope="col" class="text-center"><span class="h3" th:text="${t.seat}"></span></td>
+                    <td scope="col" class="text-center"><span class="h3" th:text="${t.voyage.cityInc.name}"></span></td>
+                    <td scope="col" class="text-center"><span class="h3" th:text="${t.voyage.cityOut.name}"></span></td>
+                    <td scope="col" class="text-center"><span class="h3" th:text="${t.voyage.dateTimeInc}"></span></td>
+                    <td scope="col" class="text-center"><span class="h3" th:text="${t.voyage.dateTimeOut}"></span></td>
+                </form>
+            </tr>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

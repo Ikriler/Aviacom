@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/bootstrap/bootstrap.css">
+    <title>Билеты></title>
+</head>
+<body>
+<div th:insert="components/header"></div>
+<div class="d-flex flex-column align-items-center justify-content-center mt-3">
+    <p class="display-5 p-2">Добавление билетов</p>
+    <form method="post" th:action="@{/ticket/add}"
+          class="form col-sm-3">
+
+        <div class="form-group mt-2">
+            <label>Номер рейса</label>
+            <select class="form-select mt-2" name="voyage">
+                <option th:each="v : ${voyages}" th:value="${v.id}" th:text="${v.id}">
+                </option>
+            </select>
+        </div>
+
+        <div class="form-group mt-2">
+            <label>Цена</label>
+            <input placeholder="Цена билета" type="number" step="0.01" class="form-control" name="price"/>
+            <span class="error text-danger" th:if="${message != null}" th:text="${message}"></span>
+        </div>
+
+
+        <input type="submit" value="Сгенерировать билеты" class="btn btn-success mt-2">
+    </form>
+</div>
+</body>
+</html>
