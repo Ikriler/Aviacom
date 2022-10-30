@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/bootstrap/bootstrap.css">
+    <title>Бронирование</title>
+</head>
+<body>
+<div th:insert="components/header"></div>
+
+<div class="d-flex flex-column align-items-center justify-content-center mt-3">
+    <p class="display-5 p-2">Бронирование</p>
+    <form method="post" th:action="@{/booking/add}"
+          class="form col-sm-5"
+          th:object="${booking}">
+
+        <input type="hidden" th:field="*{ticket}" th:value="${ticket.id}">
+
+        <div class="form-group mt-2">
+            <label>Клиент</label>
+            <select class="form-select mt-2" th:field="*{client}">
+                <option th:each="c : ${clients}" th:value="${c.id}" th:text="${c.name + ' ' + c.surname + ' ' + c.patronymic + ' - ' + c.email}">
+                </option>
+            </select>
+        </div>
+        <span class="error text-danger" th:if="${#fields.hasErrors('client')}" th:errors="*{client}"></span>
+
+        <div class="form-group mt-2">
+            <label>Дата окончания брони</label>
+            <div class="d-flex flex-row">
+                <input type="date" class="form-control" th:field="*{dateEnd}" th:value="${dateEnd}">
+            </div>
+        </div>
+        <span class="error text-danger" th:if="${#fields.hasErrors('dateEnd')}" th:errors="*{dateEnd}"></span>
+
+
+        <input type="submit" value="Забронировать" class="btn btn-success mt-2">
+    </form>
+</div>
+</body>
+</html>

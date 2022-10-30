@@ -22,9 +22,9 @@ public class Booking {
     @JoinColumn(name = "employee_id", referencedColumnName = "id")
     private Employee employee;
 
-    private Date dateEnd;
+    private String dateEnd;
 
-    public Booking(Client client, Ticket ticket, Employee employee, Date dateEnd) {
+    public Booking(Client client, Ticket ticket, Employee employee, String dateEnd) {
         this.client = client;
         this.ticket = ticket;
         this.employee = employee;
@@ -65,11 +65,11 @@ public class Booking {
         this.employee = employee;
     }
 
-    public Date getDateEnd() {
+    public String getDateEnd() {
         return dateEnd;
     }
 
-    public void setDateEnd(Date dateEnd) {
+    public void setDateEnd(String dateEnd) {
         this.dateEnd = dateEnd;
     }
 }
