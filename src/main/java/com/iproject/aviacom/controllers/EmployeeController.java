@@ -29,10 +29,10 @@ public class EmployeeController {
     public String employeeList(@RequestParam(required = false) String searchName,
             @RequestParam(required = false) String searchSurname,
             @RequestParam(required = false) String searchPatronymic, Model model) {
-        if(searchName != null || searchPatronymic != null || searchSurname != null) {
-            searchName = searchName == null || searchName == "" ? "_" : searchName;
-            searchPatronymic = searchPatronymic == null || searchPatronymic == "" ? "_" : searchPatronymic;
-            searchSurname = searchSurname == null || searchSurname == "" ? "_" : searchSurname;
+        if(searchName != "" || searchPatronymic != "" || searchSurname != "") {
+            searchName = searchName == "" ? "_" : searchName;
+            searchPatronymic = searchPatronymic == "" ? "_" : searchPatronymic;
+            searchSurname =  searchSurname == "" ? "_" : searchSurname;
             model.addAttribute("employees", employeeRepository.findByNameContainsOrSurnameContainsOrPatronymicContains(searchName, searchSurname, searchPatronymic));
         }
         else {
@@ -42,7 +42,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/add")
-    public String employeeAddPage(@ModelAttribute("employee") @Valid Employee employee, BindingResult bindingResult, Model model) {
+    public String employeeAddPage(@ModelAttribute("employee") Employee employee, BindingResult bindingResult, Model model) {
         model.addAttribute("posts", postRepository.findAll());
         return "employee/add";
     }

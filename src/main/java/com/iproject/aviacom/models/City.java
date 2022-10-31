@@ -23,10 +23,10 @@ public class City {
     @JoinColumn(name = "country_id", referencedColumnName = "id")
     private Country country;
 
-    @OneToMany(mappedBy = "cityInc", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cityInc", cascade = CascadeType.REMOVE)
     private List<Voyage> voyageListInc;
 
-    @OneToMany(mappedBy = "cityOut", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cityOut", cascade = CascadeType.REMOVE)
     private List<Voyage> voyageListOut;
 
     public City(String name, String description, Country country) {

@@ -22,11 +22,11 @@ public class Sale {
     @JoinColumn(name = "employee_id", referencedColumnName = "id")
     private Employee employee;
 
-    private Date saleDate;
+    private String saleDate;
 
 
 
-    public Sale(Client client, Ticket ticket, Employee employee, Date saleDate) {
+    public Sale(Client client, Ticket ticket, Employee employee, String saleDate) {
         this.client = client;
         this.ticket = ticket;
         this.employee = employee;
@@ -67,11 +67,11 @@ public class Sale {
         this.employee = employee;
     }
 
-    public Date getSaleDate() {
+    public String getSaleDate() {
         return saleDate;
     }
 
-    public void setSaleDate(Date saleDate) {
+    public void setSaleDate(String saleDate) {
         this.saleDate = saleDate;
     }
 }

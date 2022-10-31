@@ -14,6 +14,8 @@ public interface TicketRepository extends CrudRepository<Ticket, Long> {
 
     List<Ticket> findByBookingIsNotNullAndSaleIsNullAndVoyage(Voyage voyage);
 
+    List<Ticket> findByBookingIsNullAndSaleIsNotNullAndVoyage(Voyage voyage);
+
     List<Ticket> findByBookingIsNullAndSaleIsNull();
 
 }

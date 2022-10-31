@@ -11,6 +11,7 @@ public class PostSeeder {
     private static List<Post> postList = new ArrayList<>();
 
     private static void init() {
+        postList = new ArrayList<>();
         postList.add(new Post("ADMIN", "Админ"));
         postList.add(new Post("CASHIER", "Кассир"));
         postList.add(new Post("AIRDROME", "Диспетчер"));
@@ -25,5 +26,10 @@ public class PostSeeder {
                 postRepository.save(post);
             }
         }
+    }
+
+    public static List<Post> getPostList() {
+        init();
+        return postList;
     }
 }

@@ -1,6 +1,7 @@
 package com.iproject.aviacom.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Entity
@@ -9,15 +10,15 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-
+    @NotBlank(message = "Поле не должно быть пустым")
     private String name;
-
+    @NotBlank(message = "Поле не должно быть пустым")
     private String surname;
-
+    @NotBlank(message = "Поле не должно быть пустым")
     private String patronymic;
-
+    @NotBlank(message = "Поле не должно быть пустым")
     private String phone;
-
+    @NotBlank(message = "Поле не должно быть пустым")
     private String login;
 
     private String password;

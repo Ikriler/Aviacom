@@ -23,6 +23,9 @@ public class Airplane {
     @JoinColumn(name = "layout_type_id", referencedColumnName = "id")
     private LayoutType layoutType;
 
+    @OneToMany(mappedBy = "airplane", cascade = CascadeType.REMOVE)
+    private List<Voyage> voyageList;
+
     public Airplane(int firstClassClientsCount, int businessClassClientsCount, int economicClassClientsCount, LayoutType layoutType, String model) {
         this.model = model;
         this.firstClassClientsCount = firstClassClientsCount;
@@ -81,4 +84,11 @@ public class Airplane {
         this.model = model;
     }
 
+    public List<Voyage> getVoyageList() {
+        return voyageList;
+    }
+
+    public void setVoyageList(List<Voyage> voyageList) {
+        this.voyageList = voyageList;
+    }
 }

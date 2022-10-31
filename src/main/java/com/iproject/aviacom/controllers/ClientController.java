@@ -26,10 +26,10 @@ public class ClientController {
     public String clientList(@RequestParam(required = false) String searchName,
                            @RequestParam(required = false) String searchSurname,
                            @RequestParam(required = false) String searchPatronymic, Model model) {
-        if(searchName != null || searchPatronymic != null || searchSurname != null) {
-            searchName = searchName == null || searchName == "" ? "_" : searchName;
-            searchPatronymic = searchPatronymic == null || searchPatronymic == "" ? "_" : searchPatronymic;
-            searchSurname = searchSurname == null || searchSurname == "" ? "_" : searchSurname;
+        if(searchName != "" || searchPatronymic != "" || searchSurname != "") {
+            searchName = searchName == "" ? "_" : searchName;
+            searchPatronymic = searchPatronymic == "" ? "_" : searchPatronymic;
+            searchSurname =  searchSurname == "" ? "_" : searchSurname;
             model.addAttribute("clients", clientRepository.findByNameContainsOrSurnameContainsOrPatronymicContains(searchName, searchSurname, searchPatronymic));
         }
         else {
@@ -39,7 +39,7 @@ public class ClientController {
     }
 
     @GetMapping("/add")
-    public String clientAddPage(@ModelAttribute("client") @Valid Client client, BindingResult bindingResult, Model model) {
+    public String clientAddPage(@ModelAttribute("client") Client client, BindingResult bindingResult, Model model) {
         return "client/add";
     }
 

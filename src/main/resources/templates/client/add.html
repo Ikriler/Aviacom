@@ -63,7 +63,10 @@
         </div>
         <span class="error text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
 
-        <input type="submit" value="Добавить" class="btn btn-success mt-2">
+        <div class="form-group mt-2">
+            <input type="submit" value="Добавить" class="btn btn-success mt-2">
+        </div>
+
     </form>
 </div>
 

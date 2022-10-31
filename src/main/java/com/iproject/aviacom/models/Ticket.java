@@ -22,10 +22,10 @@ public class Ticket {
 
     private String seat;
 
-    @OneToOne(optional = true, mappedBy = "ticket")
+    @OneToOne(optional = true, mappedBy = "ticket", cascade = CascadeType.REMOVE)
     private Booking booking;
 
-    @OneToOne(optional = true, mappedBy = "ticket")
+    @OneToOne(optional = true, mappedBy = "ticket", cascade = CascadeType.REMOVE)
     private Sale sale;
 
     public Ticket(Voyage voyage, SeatClass seatClass, Double price, String seat) {

@@ -3,6 +3,7 @@ package com.iproject.aviacom.models;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 public class Client {
@@ -10,20 +11,20 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-
+    @NotBlank(message = "Поле не должно быть пустым")
     private String name;
-
+    @NotBlank(message = "Поле не должно быть пустым")
     private String surname;
-
+    @NotBlank(message = "Поле не должно быть пустым")
     private String patronymic;
-
+    @NotBlank(message = "Поле не должно быть пустым")
     @Column(unique = true)
     private String email;
-
+    @NotBlank(message = "Поле не должно быть пустым")
     private String phone;
-
+    @NotBlank(message = "Поле не должно быть пустым")
     private String passportSeries;
-
+    @NotBlank(message = "Поле не должно быть пустым")
     private String passportNumber;
 
     private String password;
