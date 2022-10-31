@@ -1,21 +1,60 @@
 package com.iproject.aviacom.controllers;
 
+import com.iproject.aviacom.models.City;
+import com.iproject.aviacom.models.Ticket;
+import com.iproject.aviacom.models.Voyage;
+import com.iproject.aviacom.repositories.AirplaneRepository;
+import com.iproject.aviacom.repositories.CityRepository;
+import com.iproject.aviacom.repositories.TicketRepository;
+import com.iproject.aviacom.repositories.VoyageRepository;
 import com.iproject.aviacom.services.CurrentUserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.List;
+
 import com.iproject.aviacom.enums.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class MainController {
 
+    @Autowired
+    VoyageRepository voyageRepository;
+    @Autowired
+    CityRepository cityRepository;
+    @Autowired
+    TicketRepository ticketRepository;
+
     @GetMapping("/")
-    public String mainPage() {
+    public String mainPage(@RequestParam(required = false) City cityInc,
+                           @RequestParam(required = false) City cityOut,
+                           @RequestParam(required = false) String dateInc,
+                           @RequestParam(required = false) String dateOut,
+                           Model model) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        if(cityInc != null && cityOut != null && dateInc != null && dateInc != "") {
+            if(dateOut != null & dateOut != "") {
+                model.addAttribute("voyages", voyageRepository.findByCityIncAndCityOutAndDateTimeIncContainsAndDateTimeOutContains(cityInc, cityOut, dateInc, dateOut));
+                model.addAttribute("voyages", voyageRepository.findByCityIncAndCityOutAndDateTimeIncContains(cityInc, cityOut, dateInc));
+            }
+            else {
+                model.addAttribute("voyages", voyageRepository.findByCityIncAndCityOutAndDateTimeIncContains(cityInc, cityOut, dateInc));
+            }
+        }
+        else {
+            model.addAttribute("voyages", voyageRepository.findAll());
+        }
+        model.addAttribute("cities", cityRepository.findAll());
         return "main";
     }
 
@@ -37,5 +76,23 @@ public class MainController {
         }
 
     }
+
+    @GetMapping("/main/tickets")
+    public String availableTickets(@ModelAttribute("voyage") Voyage voyage, Model model) {
+        Voyage dbVoyage = voyageRepository.findById(voyage.getId()).get();
+        if(dbVoyage == null) {
+            return "redirect:/";
+        }
+        List<Ticket> ticketList = ticketRepository.findByBookingIsNullAndSaleIsNullAndVoyage(dbVoyage);
+        if(ticketList == null || ticketList.size() == 0) {
+            model.addAttribute("voyages", voyageRepository.findAll());
+            model.addAttribute("cities", cityRepository.findAll());
+            model.addAttribute("message","Нет доступных билетов");
+            return "main";
+        }
+        model.addAttribute("tickets", ticketList);
+        return "mainTickets";
+    }
+
 
 }

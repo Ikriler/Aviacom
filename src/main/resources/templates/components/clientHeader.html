@@ -8,10 +8,10 @@
         <a class="nav-link" th:href="@{/activity/profile}">Профиль</a>
       </li>
       <li class="nav-item ms-3" th:if="${user.isClient.CheckContains()}">
-        <a class="nav-link" th:href="@{/}">Купленные билеты</a>
+        <a class="nav-link" th:href="@{/activity/sale}">Купленные билеты</a>
       </li>
       <li class="nav-item ms-3" th:if="${user.isClient.CheckContains()}">
-        <a class="nav-link" th:href="@{/}">Забронированные билеты</a>
+        <a class="nav-link" th:href="@{/activity/booking}">Забронированные билеты</a>
       </li>
     </ul>
   </div>

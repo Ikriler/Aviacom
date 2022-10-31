@@ -9,7 +9,70 @@
 <body>
 <div th:insert="components/clientHeader"></div>
 
+<search class="d-flex flex-column align-items-center mt-3">
+    <p class="display-5 p-2">Список рейсов</p>
+    <span class="error text-danger" th:if="${message != null}" th:text="${message}"></span>
+    <form method="get" th:action="@{/}"
+          class="form-horizontal d-flex flex-row align-items-center justify-content-between col-sm-6">
+        <div class="form-group mt-2">
+            <label>Город отправления</label>
+            <select class="form-select mt-2" name="cityInc">
+                <option th:each="c : ${cities}" th:value="${c.id}" th:text="${c.name}">
+                </option>
+            </select>
+        </div>
+        <div class="form-group mt-2">
+            <label>Город прибытия</label>
+            <select class="form-select mt-2" name="cityOut">
+                <option th:each="c : ${cities}" th:value="${c.id}" th:text="${c.name}">
+                </option>
+            </select>
+        </div>
+        <div class="form-group mt-2">
+            <label>Дата отправления</label>
+            <input type="date" class="form-control mt-2" name="dateInc">
+        </div>
+        <div class="form-group mt-2">
+            <label>Дата прибытия</label>
+            <input type="date" class="form-control mt-2" name="dateOut">
+        </div>
+        <div class="form-group mt-2">
+            <input value="Поиск" type="submit" class="btn btn-primary search">
+        </div>
+    </form>
+</search>
 
+<div class="d-flex flex-column align-items-center justify-content-center mt-3">
+    <div class="col-sm-10">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th scope="col" class="text-center">Код рейса</th>
+                <th scope="col" class="text-center">Город отправления</th>
+                <th scope="col" class="text-center">Город прибытия</th>
+                <th scope="col" class="text-center">Дата отправления</th>
+                <th scope="col" class="text-center">Дата прибытия</th>
+                <th scope="col" class="text-center">Модель самолёта</th>
+                <th scope="col" class="text-center">Билеты</th>
+            </tr>
+            </thead>
+            <tr th:each="v : ${voyages}">
+                <form>
+                    <input type="hidden" name="voyage" th:value="${v.id}">
+                    <td scope="col" class="text-center"><span class="h3" th:text="${v.id}"></span></td>
+                    <td scope="col" class="text-center"><span class="h3" th:text="${v.cityInc.name}"></span></td>
+                    <td scope="col" class="text-center"><span class="h3" th:text="${v.cityOut.name}"></span></td>
+                    <td scope="col" class="text-center"><span class="h3" th:text="${v.dateTimeInc}"></span></td>
+                    <td scope="col" class="text-center"><span class="h3" th:text="${v.dateTimeOut}"></span></td>
+                    <td scope="col" class="text-center"><span class="h3" th:text="${v.airplane.model}"></span></td>
+                    <td scope="col" class="text-center"><input type="submit" value="Посмотреть билеты" class="btn btn-primary ml-2"
+                                                               th:formaction="@{/main/tickets}" formmethod="get">
+                    </td>
+                </form>
+            </tr>
+        </table>
+    </div>
+</div>
 
 </body>
 </html>
