@@ -2,4 +2,9 @@ body {
     background-image: url("/images/fon1.jpg");
     background-size: cover;
     background-repeat: no-repeat;
+    height: 100%;
+}
+
+html, .container-fluid {
+    height: 100%;
 }

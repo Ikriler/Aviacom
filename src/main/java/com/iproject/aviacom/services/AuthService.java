@@ -12,4 +12,9 @@ public class AuthService {
         return role;
     }
 
+    public static String getName() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getName();
+    }
+
 }

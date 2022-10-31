@@ -6,7 +6,7 @@
     <title>Please Log In</title>
 </head>
 <body class="d-flex align-items-center justify-content-center">
-<div class="container-fluid d-flex flex-column align-items-center">
+<div class="container-fluid d-flex flex-column align-items-center justify-content-center pb-5">
     <h1 class="text-white">Please Log In</h1>
     <div class="text-white" th:if="${param.error}">
         Invalid username and password.
@@ -23,7 +23,7 @@
         </div>
         <div class="d-flex justify-content-between">
             <input type="submit" value="Войти" class="btn btn-primary"/>
-            <a class="btn btn-primary" href="/registration">Регистрация</a>
+            <a class="btn btn-primary" th:href="@{/registration}">Регистрация</a>
         </div>
     </form>
 </div>

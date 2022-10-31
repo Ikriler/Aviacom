@@ -19,6 +19,16 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http.csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/", "/login", "/logout", "/registration/**", "/static/**", "/images/**").permitAll()
+                .antMatchers("/country/**", "/city/**", "/airplane/**", "/voyage/**", "/ticket/**").hasAnyRole("ADMIN", "AIRDROME")
+                .antMatchers("/employee/**").hasAnyRole("ADMIN", "PERSONNEL")
+                .antMatchers("/client/**").hasAnyRole("ADMIN", "CASHIER", "BOOKING")
+                .antMatchers("/booking/**").hasAnyRole("ADMIN", "BOOKING")
+                .antMatchers("/sale/**").hasAnyRole("ADMIN", "CASHIER")
+                .antMatchers("/activity/**").hasAnyRole("USER")
+                .anyRequest().authenticated()
+                .and()
                 .formLogin().loginPage("/login")
                 .defaultSuccessUrl("/success", true);
 
