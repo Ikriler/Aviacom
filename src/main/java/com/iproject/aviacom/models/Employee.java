@@ -21,7 +21,7 @@ public class Employee {
     @Size(max = 200, message = "Поле должно иметь меньше 200 символов")
     @NotBlank(message = "Поле не должно быть пустым")
     private String patronymic;
-    @Pattern(regexp = "^\\+[78]\\([0-9]{3}\\)[0-9]{3}-[0-9]{2}-[0-9]{2}$", message = "Телефон должен иметь вид +7(999)999-99-99")
+    @Pattern(regexp = "^\\+7\\([0-9]{3}\\)[0-9]{3}-[0-9]{2}-[0-9]{2}$", message = "Телефон должен иметь вид +7(999)999-99-99")
     @Column(unique = true)
     @NotBlank(message = "Поле не должно быть пустым")
     private String phone;
