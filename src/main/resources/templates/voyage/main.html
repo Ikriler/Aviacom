@@ -18,32 +18,36 @@
 
 <search class="d-flex flex-column align-items-center mt-3">
     <p class="display-5 p-2">Список рейсов</p>
+    <span class="error text-danger" th:if="${message != null}" th:text="${message}"></span>
     <form method="get" th:action="@{/voyage}"
           class="form-horizontal d-flex flex-row align-items-center justify-content-between col-sm-6">
         <div class="form-group mt-2">
             <label>Город отправления</label>
             <select class="form-select mt-2" name="cityInc">
-                <option th:each="c : ${cities}" th:value="${c.id}" th:text="${c.name}">
+                <option th:each="c : ${cities}" th:value="${c.id}" th:text="${c.name}" th:selected="${cityInc != null && cityInc.id == c.id}">
                 </option>
             </select>
         </div>
         <div class="form-group mt-2">
             <label>Город прибытия</label>
             <select class="form-select mt-2" name="cityOut">
-                <option th:each="c : ${cities}" th:value="${c.id}" th:text="${c.name}">
+                <option th:each="c : ${cities}" th:value="${c.id}" th:text="${c.name}" th:selected="${cityOut != null && cityOut.id == c.id}">
                 </option>
             </select>
         </div>
         <div class="form-group mt-2">
             <label>Дата отправления</label>
-            <input type="date" class="form-control mt-2" name="dateInc">
+            <input type="date" class="form-control mt-2" name="dateInc" th:value="${dateInc}">
         </div>
         <div class="form-group mt-2">
             <label>Дата прибытия</label>
-            <input type="date" class="form-control mt-2" name="dateOut">
+            <input type="date" class="form-control mt-2" name="dateOut" th:value="${dateOut}">
         </div>
         <div class="form-group mt-2">
             <input value="Поиск" type="submit" class="btn btn-primary search">
+        </div>
+        <div class="form-group mt-2">
+            <a class="btn btn-primary search" th:href="@{/voyage}">Очистить поиск</a>
         </div>
     </form>
 </search>

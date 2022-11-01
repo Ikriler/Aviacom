@@ -32,6 +32,8 @@ public class SaleController {
     public String saleList(@RequestParam(required = false) String listType,
                            @ModelAttribute("voyage") Voyage voyage,
                            Model model) {
+        model.addAttribute("voyage", voyage);
+        model.addAttribute("listType", listType);
         if (listType != null) {
             switch (listType) {
                 case "Доступные":

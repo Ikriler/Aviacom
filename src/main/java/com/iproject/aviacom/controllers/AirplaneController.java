@@ -25,6 +25,7 @@ public class AirplaneController {
 
     @GetMapping
     public String airplaneList(@RequestParam(required = false) String search, Model model) {
+        model.addAttribute("search", search);
         if (search != null && search != "") {
             model.addAttribute("airplanes", airplaneRepository.findByModelContains(search));
         } else {

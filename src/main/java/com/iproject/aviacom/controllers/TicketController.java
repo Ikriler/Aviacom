@@ -5,6 +5,7 @@ import com.iproject.aviacom.repositories.SeatClassRepository;
 import com.iproject.aviacom.repositories.TicketRepository;
 import com.iproject.aviacom.repositories.VoyageRepository;
 import com.iproject.aviacom.services.TicketService;
+import com.iproject.aviacom.services.ValidatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +27,7 @@ public class TicketController {
 
     @GetMapping
     public String ticketList(@RequestParam(required = false) Voyage voyage, Model model, HttpSession session) {
+        model.addAttribute("voyage", voyage);
         if(voyage != null) {
             model.addAttribute("tickets", ticketRepository.findByVoyage(voyage));
         }
@@ -61,6 +63,9 @@ public class TicketController {
             return "ticket/add";
         }
         Double priceDouble = Double.parseDouble(price);
+        if(!ValidatorService.notLessZero(model, priceDouble, "message")) {
+            return "ticket/add";
+        }
         TicketService.generateTickets(ticketRepository, seatClassRepository, voyage, priceDouble);
         return "redirect:/ticket";
     }
@@ -83,12 +88,16 @@ public class TicketController {
     }
 
     @PostMapping("/edit")
-    public String ticketEdit(@ModelAttribute("voyage") Voyage voyage, @RequestParam String price) {
+    public String ticketEdit(@ModelAttribute("voyage") Voyage voyage, @RequestParam String price, Model model) {
         if(price == "" || price == "0") {
             return "redirect:/ticket";
         }
+
         else {
             Double priceDouble = Double.parseDouble(price);
+            if(!ValidatorService.notLessZero(model, priceDouble, "message")) {
+                return "ticket/edit";
+            }
             TicketService.changePrice(priceDouble, voyage.getTickets(), ticketRepository);
         }
         return "redirect:/ticket";

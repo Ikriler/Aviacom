@@ -130,6 +130,12 @@ public class ClientActivityController {
         Client client = clientRepository.findByEmail(AuthService.getName());
         Sale sale = new Sale();
 
+        Booking booking = bookingRepository.findByTicket(ticket);
+
+        if(booking != null) {
+            bookingRepository.delete(booking);
+        }
+
         String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         sale.setTicket(ticket);
         sale.setClient(client);

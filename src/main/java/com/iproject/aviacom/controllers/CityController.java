@@ -25,6 +25,7 @@ public class CityController {
 
     @GetMapping
     public String cityList(@RequestParam(required = false) String search, Model model) {
+        model.addAttribute("search", search);
         if (search != null && search != "") {
             model.addAttribute("cities", cityRepository.findByNameContains(search));
         } else {

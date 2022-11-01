@@ -16,6 +16,8 @@ public interface VoyageRepository extends CrudRepository<Voyage, Long> {
 
     List<Voyage> findByCityIncAndCityOutAndDateTimeIncContains(City cityInc, City cityOut, String dateTimeInc);
 
+    List<Voyage> findByCityIncAndCityOut(City cityInc, City cityOut);
+
     List<Voyage> findByCityIncAndCityOutAndDateTimeIncContainsAndDateTimeOutContains(City cityInc, City cityOut, String dateTimeInc, String dateTimeOut);
 
     List<Voyage> findByTicketsIsEmpty();

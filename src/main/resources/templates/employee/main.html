@@ -20,10 +20,11 @@
     <p class="display-5 p-2">Список сотрудников</p>
     <form method="get" th:action="@{/employee}"
           class="form-horizontal d-flex flex-row align-items-center justify-content-center col-sm-6">
-        <input placeholder="Имя" class="form-control search" name="searchName">
-        <input placeholder="Фамилия" class="form-control search" name="searchSurname">
-        <input placeholder="Отчество" class="form-control search" name="searchPatronymic">
-        <input value="Поиск" type="submit" class="btn btn-primary">
+        <input placeholder="Имя" class="form-control search" name="searchName" th:value="${searchName}">
+        <input placeholder="Фамилия" class="form-control search" name="searchSurname" th:value="${searchSurname}">
+        <input placeholder="Отчество" class="form-control search" name="searchPatronymic" th:value="${searchPatronymic}">
+        <input value="Поиск" type="submit" class="btn btn-primary search">
+        <a class="btn btn-primary col-sm-2" th:href="@{/employee}">Очистить поиск</a>
     </form>
 </search>
 

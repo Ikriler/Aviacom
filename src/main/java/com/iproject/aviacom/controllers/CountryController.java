@@ -19,6 +19,7 @@ public class CountryController {
 
     @GetMapping
     public String countryList(@ModelAttribute("country") Country country, @RequestParam(required = false) String search, Model model) {
+        model.addAttribute("search", search);
         if (search != null && search != "") {
             model.addAttribute("countries", countryRepository.findByNameContains(search));
         } else {

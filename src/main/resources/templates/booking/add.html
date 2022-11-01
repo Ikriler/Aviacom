@@ -25,14 +25,6 @@
         </div>
         <span class="error text-danger" th:if="${#fields.hasErrors('client')}" th:errors="*{client}"></span>
 
-        <div class="form-group mt-2">
-            <label>Дата окончания брони</label>
-            <div class="d-flex flex-row">
-                <input type="date" class="form-control" th:field="*{dateEnd}" th:value="${dateEnd}">
-            </div>
-        </div>
-        <span class="error text-danger" th:if="${#fields.hasErrors('dateEnd')}" th:errors="*{dateEnd}"></span>
-
 
         <input type="submit" value="Забронировать" class="btn btn-success mt-2">
     </form>

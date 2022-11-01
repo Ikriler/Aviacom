@@ -13,6 +13,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 @Controller
 @RequestMapping("/booking")
@@ -33,6 +36,8 @@ public class BookingController {
     public String bookingList(@RequestParam(required = false) String listType,
                               @ModelAttribute("voyage") Voyage voyage,
                               Model model) {
+        model.addAttribute("voyage", voyage);
+        model.addAttribute("listType", listType);
         if(listType != null) {
             switch (listType) {
                 case "Доступные":
@@ -60,7 +65,7 @@ public class BookingController {
     @PostMapping("/add")
     public String bookingAdd(@ModelAttribute("booking") @Valid Booking booking,
                              BindingResult bindingResult,
-                             Model model) {
+                             Model model) throws ParseException {
         model.addAttribute("ticket", booking.getTicket());
         model.addAttribute("clients", clientRepository.findAll());
 
@@ -75,6 +80,15 @@ public class BookingController {
         if(bindingResult.hasErrors()) {
             return "booking/add";
         }
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar calendar = Calendar.getInstance();
+
+        String dateInc = booking.getTicket().getVoyage().getDateTimeInc().split("[ ]")[0];
+        calendar.setTime(dateFormat.parse(dateInc));
+        calendar.add(Calendar.DATE, -1);
+
+        booking.setDateEnd(dateFormat.format(calendar.getTime()));
 
         booking.setEmployee(employee);
 

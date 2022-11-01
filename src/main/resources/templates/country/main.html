@@ -25,9 +25,10 @@
 
 <search class="d-flex flex-column align-items-center mt-3">
     <form method="get" th:action="@{/country}"
-          class="form-horizontal d-flex flex-row align-items-center justify-content-center col-sm-3">
-        <input placeholder="Название страны" class="form-control search" name="search">
-        <input value="Поиск" type="submit" class="btn btn-primary">
+          class="form-horizontal d-flex flex-row align-items-center justify-content-center col-sm-4">
+        <input placeholder="Название страны" class="form-control search" name="search" th:value="${search}">
+        <input value="Поиск" type="submit" class="btn btn-primary search">
+        <a class="btn btn-primary col-sm-3" th:href="@{/country}">Очистить поиск</a>
     </form>
 </search>
 

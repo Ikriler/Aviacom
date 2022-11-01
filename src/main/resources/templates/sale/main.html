@@ -15,7 +15,7 @@
         <div class="form-group mt-2 right">
             <label>Номер рейса</label>
             <select class="form-select mt-2" name="voyage">
-                <option th:each="v : ${voyages}" th:value="${v.id}" th:text="${v.id}">
+                <option th:each="v : ${voyages}" th:value="${v.id}" th:text="${v.id}" th:selected="${voyage != null && voyage.id == v.id}">
                 </option>
             </select>
         </div>
@@ -23,11 +23,14 @@
             <label>Тип билетов</label>
             <select class="form-select mt-2" name="listType">
                 <option value="Доступные">Доступные</option>
-                <option value="Купленные">Купленные</option>
+                <option value="Купленные" th:selected="${listType == 'Купленные'}">Купленные</option>
             </select>
         </div>
-        <div class="form-group mt-2">
+        <div class="form-group mt-2 right">
             <input value="Поиск" type="submit" class="btn btn-primary search" th:formaction="@{/sale}" formmethod="get">
+        </div>
+        <div class="form-group mt-2">
+            <a class="btn btn-primary search" th:href="@{/sale}">Очистить поиск</a>
         </div>
     </form>
 </search>

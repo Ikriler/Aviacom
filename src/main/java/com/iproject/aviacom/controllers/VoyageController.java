@@ -36,6 +36,18 @@ public class VoyageController {
                              @RequestParam(required = false) String dateOut,
                              Model model) throws ParseException {
 
+        model.addAttribute("cityInc", cityInc);
+        model.addAttribute("cityOut", cityOut);
+        model.addAttribute("dateInc", dateInc);
+        model.addAttribute("dateOut", dateOut);
+
+        if(cityInc != null && cityOut != null) {
+            model.addAttribute("voyages", voyageRepository.findByCityIncAndCityOut(cityInc, cityOut));
+        }
+        else {
+            model.addAttribute("voyages", voyageRepository.findAll());
+        }
+
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         if(cityInc != null && cityOut != null && dateInc != null && dateInc != "") {
             if(dateOut != null & dateOut != "") {
@@ -46,10 +58,9 @@ public class VoyageController {
                 model.addAttribute("voyages", voyageRepository.findByCityIncAndCityOutAndDateTimeIncContains(cityInc, cityOut, dateInc));
             }
         }
-        else {
-            model.addAttribute("voyages", voyageRepository.findAll());
-        }
+
         model.addAttribute("cities", cityRepository.findAll());
+
         return "voyage/main";
     }
 

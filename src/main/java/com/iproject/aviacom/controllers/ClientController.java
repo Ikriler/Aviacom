@@ -26,6 +26,10 @@ public class ClientController {
     public String clientList(@RequestParam(required = false) String searchName,
                            @RequestParam(required = false) String searchSurname,
                            @RequestParam(required = false) String searchPatronymic, Model model) {
+        model.addAttribute("searchName", searchName);
+        model.addAttribute("searchSurname", searchSurname);
+        model.addAttribute("searchPatronymic", searchPatronymic);
+
         if(searchName != "" || searchPatronymic != "" || searchSurname != "") {
             searchName = searchName == "" ? "_" : searchName;
             searchPatronymic = searchPatronymic == "" ? "_" : searchPatronymic;
