@@ -24,6 +24,8 @@
             </select>
         </div>
         <span class="error text-danger" th:if="${#fields.hasErrors('cityInc')}" th:errors="*{cityInc}"></span>
+        <span class="error text-danger" th:if="${citiesError != null}" th:text="${citiesError}"></span>
+
 
         <div class="form-group mt-2">
             <label>Дата/Время отправления</label>
@@ -33,6 +35,7 @@
             </div>
         </div>
         <span class="error text-danger" th:if="${dateTimeIncMessage != null}" th:text="${dateTimeIncMessage}"></span>
+        <span class="error text-danger" th:if="${datesError != null}" th:text="${datesError}"></span>
 
         <div class="form-group mt-2">
             <label>Город прибытия</label>
@@ -42,6 +45,7 @@
             </select>
         </div>
         <span class="error text-danger" th:if="${#fields.hasErrors('cityOut')}" th:errors="*{cityOut}"></span>
+        <span class="error text-danger" th:if="${citiesError != null}" th:text="${citiesError}"></span>
 
         <div class="form-group mt-2">
             <label>Дата/Время прибытия</label>
@@ -51,6 +55,7 @@
             </div>
         </div>
         <span class="error text-danger" th:if="${dateTimeOutMessage != null}" th:text="${dateTimeOutMessage}"></span>
+        <span class="error text-danger" th:if="${datesError != null}" th:text="${datesError}"></span>
 
         <div class="form-group mt-2">
             <label>Самолёт</label>

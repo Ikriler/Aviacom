@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -89,6 +92,7 @@ public class VoyageController {
 
         String dateTimeIncMessage = "";
         String dateTimeOutMessage = "";
+        String citiesError = "";
 
         if(dateInc == "" || timeInc == "") {
             dateTimeIncMessage = "Поля не должны быть пустыми";
@@ -100,12 +104,27 @@ public class VoyageController {
             model.addAttribute("dateTimeOutMessage", dateTimeOutMessage);
         }
 
-        if(bindingResult.hasErrors() || dateTimeIncMessage != "" || dateTimeOutMessage != "") {
+        if(voyage.getCityInc() == voyage.getCityOut()) {
+            citiesError = "Города не должны совпадать";
+            model.addAttribute("citiesError", citiesError);
+        }
+
+        if(bindingResult.hasErrors() || dateTimeIncMessage != "" || dateTimeOutMessage != "" || citiesError != "") {
             return "voyage/add";
         }
 
         String dateTimeInc = dateInc + " " + timeInc;
         String dateTimeOut = dateOut + " " + timeOut;
+
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+        LocalDateTime localDateTimeInc = LocalDateTime.parse(dateTimeInc, dateTimeFormatter);
+        LocalDateTime localDateTimeOut = LocalDateTime.parse(dateTimeOut, dateTimeFormatter);
+
+        if(localDateTimeInc.isAfter(localDateTimeOut)) {
+            model.addAttribute("datesError", "Дата/Время отправления не должны быть позже прибытия");
+            return "voyage/add";
+        }
 
         voyage.setDateTimeInc(dateTimeInc);
         voyage.setDateTimeOut(dateTimeOut);
@@ -168,6 +187,7 @@ public class VoyageController {
 
         String dateTimeIncMessage = "";
         String dateTimeOutMessage = "";
+        String citiesError = "";
 
         if(dateInc == "" || timeInc == "") {
             dateTimeIncMessage = "Поля не должны быть пустыми";
@@ -179,12 +199,27 @@ public class VoyageController {
             model.addAttribute("dateTimeOutMessage", dateTimeOutMessage);
         }
 
-        if(bindingResult.hasErrors() || dateTimeIncMessage != "" || dateTimeOutMessage != "") {
-            return "voyage/add";
+        if(voyage.getCityInc() == voyage.getCityOut()) {
+            citiesError = "Города не должны совпадать";
+            model.addAttribute("citiesError", citiesError);
+        }
+
+        if(bindingResult.hasErrors() || dateTimeIncMessage != "" || dateTimeOutMessage != "" || citiesError != "") {
+            return "voyage/edit";
         }
 
         String dateTimeInc = dateInc + " " + timeInc;
         String dateTimeOut = dateOut + " " + timeOut;
+
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+        LocalDateTime localDateTimeInc = LocalDateTime.parse(dateTimeInc, dateTimeFormatter);
+        LocalDateTime localDateTimeOut = LocalDateTime.parse(dateTimeOut, dateTimeFormatter);
+
+        if(localDateTimeInc.isAfter(localDateTimeOut)) {
+            model.addAttribute("datesError", "Дата/Время отправления не должны быть позже прибытия");
+            return "voyage/edit";
+        }
 
         voyage.setDateTimeInc(dateTimeInc);
         voyage.setDateTimeOut(dateTimeOut);
