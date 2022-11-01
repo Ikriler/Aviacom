@@ -37,18 +37,21 @@
             <input placeholder="Номер телефона" type="text" class="form-control mt-2" th:field="*{phone}">
         </div>
         <span class="error text-danger" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
+        <span class="error text-danger" th:if="${phoneError != null}" th:text="${phoneError}"></span>
 
         <div class="form-group mt-2">
             <label>Серия паспорта</label>
             <input placeholder="Серия паспорта" type="number" class="form-control mt-2" th:field="*{passportSeries}">
         </div>
         <span class="error text-danger" th:if="${#fields.hasErrors('passportSeries')}" th:errors="*{passportSeries}"></span>
+        <span class="error text-danger" th:if="${passportError != null}" th:text="${passportError}"></span>
 
         <div class="form-group mt-2">
             <label>Номер паспорта</label>
             <input placeholder="Номер паспорта" type="number" class="form-control mt-2" th:field="*{passportNumber}">
         </div>
         <span class="error text-danger" th:if="${#fields.hasErrors('passportNumber')}" th:errors="*{passportNumber}"></span>
+        <span class="error text-danger" th:if="${passportError != null}" th:text="${passportError}"></span>
 
         <div class="form-group mt-2">
             <label>Email</label>
@@ -62,6 +65,7 @@
             <input placeholder="Пароль" type="text" class="form-control" th:field="*{password}"/>
         </div>
         <span class="error text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+        <span class="error text-danger" th:if="${passwordError != null}" th:text="${passwordError}"></span>
 
         <div class="form-group mt-2">
             <input type="submit" value="Добавить" class="btn btn-success mt-2">

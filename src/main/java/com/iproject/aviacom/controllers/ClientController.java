@@ -4,6 +4,7 @@ import com.iproject.aviacom.models.Client;
 import com.iproject.aviacom.models.Employee;
 import com.iproject.aviacom.repositories.ClientRepository;
 import com.iproject.aviacom.repositories.EmployeeRepository;
+import com.iproject.aviacom.services.ValidatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -55,7 +56,14 @@ public class ClientController {
             model.addAttribute("message","Такая почта уже существует");
             return "client/add";
         }
-        if(bindingResult.hasErrors()) {
+        if(bindingResult.hasErrors() ||
+                !ValidatorService.checkNotExistsPassword(model, client.getPassportSeries(), client.getPassportNumber(), clientRepository, "passportError", client) ||
+                !ValidatorService.checkNotExistsPhoneClient(model, client.getPhone(), clientRepository, "phoneError", client) )
+        {
+            return "client/add";
+        }
+        if(client.getPassword().length() < 5) {
+            model.addAttribute("passwordError","Пароль должен иметь не менее 5 символов");
             return "client/add";
         }
         client.setPassword(new BCryptPasswordEncoder().encode(client.getPassword()));
@@ -91,10 +99,17 @@ public class ClientController {
             return "client/edit";
         }
         dbClient = clientRepository.findById(client.getId()).get();
-        if(bindingResult.hasErrors()) {
+        if(bindingResult.hasErrors() ||
+                !ValidatorService.checkNotExistsPassword(model, client.getPassportSeries(), client.getPassportNumber(), clientRepository, "passportError", client) ||
+                !ValidatorService.checkNotExistsPhoneClient(model, client.getPhone(), clientRepository, "phoneError", client) )
+        {
             return "client/edit";
         }
         if(new_password != null && new_password != "") {
+            if(new_password.length() < 5) {
+                model.addAttribute("passwordError","Пароль должен иметь не менее 5 символов");
+                return "client/edit";
+            }
             dbClient.setPassword(new BCryptPasswordEncoder().encode(new_password));
         }
         dbClient.setName(client.getName());

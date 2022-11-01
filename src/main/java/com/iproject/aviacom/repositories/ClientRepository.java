@@ -11,4 +11,8 @@ public interface ClientRepository extends CrudRepository<Client, Long> {
     Client findByEmail(String email);
 
     List<Client> findByNameContainsOrSurnameContainsOrPatronymicContains(String name, String surname, String patronymic);
+
+    Client findByPassportSeriesAndPassportNumber(String passportSeries, String passportNumber);
+
+    Client findByPhone(String phone);
 }

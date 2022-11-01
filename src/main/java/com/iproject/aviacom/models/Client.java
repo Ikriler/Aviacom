@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Client {
@@ -20,10 +22,15 @@ public class Client {
     @NotBlank(message = "Поле не должно быть пустым")
     @Column(unique = true)
     private String email;
+    @Pattern(regexp = "^\\+[78]\\([0-9]{3}\\)[0-9]{3}-[0-9]{2}-[0-9]{2}$", message = "Телефон должен иметь вид +7(999)999-99-99")
+    @Column(unique = true)
     @NotBlank(message = "Поле не должно быть пустым")
     private String phone;
+    @Size(min = 4, max = 4, message = "Поле должно иметь 4 символа")
     @NotBlank(message = "Поле не должно быть пустым")
     private String passportSeries;
+
+    @Size(min = 6, max = 6, message = "Поле должно иметь 6 символов")
     @NotBlank(message = "Поле не должно быть пустым")
     private String passportNumber;
 
