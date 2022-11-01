@@ -1,5 +1,6 @@
 package com.iproject.aviacom.repositories;
 
+import com.iproject.aviacom.models.Client;
 import com.iproject.aviacom.models.Employee;
 import org.springframework.data.repository.CrudRepository;
 
@@ -10,5 +11,7 @@ public interface EmployeeRepository extends CrudRepository<Employee, Long> {
     Employee findByLogin(String login);
 
     List<Employee> findByNameContainsOrSurnameContainsOrPatronymicContains(String name, String surname, String patronymic);
+
+    Employee findByPhone(String phone);
 
 }

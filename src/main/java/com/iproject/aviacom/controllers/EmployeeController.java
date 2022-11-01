@@ -5,6 +5,7 @@ import com.iproject.aviacom.models.Employee;
 import com.iproject.aviacom.repositories.ClientRepository;
 import com.iproject.aviacom.repositories.EmployeeRepository;
 import com.iproject.aviacom.repositories.PostRepository;
+import com.iproject.aviacom.services.ValidatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -60,7 +61,13 @@ public class EmployeeController {
             model.addAttribute("message","Такой логин уже существует");
             return "employee/add";
         }
-        if(bindingResult.hasErrors()) {
+        if(bindingResult.hasErrors() ||
+                !ValidatorService.checkNotExistsPhoneEmployee(model, employee.getPhone(), employeeRepository, "phoneError", employee) )
+        {
+            return "employee/add";
+        }
+        if(employee.getPassword().length() < 5) {
+            model.addAttribute("passwordError","Пароль должен иметь не менее 5 символов");
             return "employee/add";
         }
         employee.setPassword(new BCryptPasswordEncoder().encode(employee.getPassword()));
@@ -98,10 +105,16 @@ public class EmployeeController {
             return "employee/edit";
         }
         dbEmployee = employeeRepository.findById(employee.getId()).get();
-        if(bindingResult.hasErrors()) {
+        if(bindingResult.hasErrors() ||
+                !ValidatorService.checkNotExistsPhoneEmployee(model, employee.getPhone(), employeeRepository, "phoneError", employee) )
+        {
             return "employee/edit";
         }
         if(new_password != null && new_password != "") {
+            if(new_password.length() < 5) {
+                model.addAttribute("passwordError","Пароль должен иметь не менее 5 символов");
+                return "employee/edit";
+            }
             dbEmployee.setPassword(new BCryptPasswordEncoder().encode(new_password));
         }
         dbEmployee.setName(employee.getName());

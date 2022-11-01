@@ -38,6 +38,7 @@
             <input placeholder="Номер телефона" type="text" class="form-control mt-2" th:field="*{phone}">
         </div>
         <span class="error text-danger" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
+        <span class="error text-danger" th:if="${phoneError != null}" th:text="${phoneError}"></span>
 
         <div class="form-group mt-2">
             <label>Должность</label>
@@ -60,6 +61,7 @@
             <input placeholder="Пароль" type="text" class="form-control" th:field="*{password}"/>
         </div>
         <span class="error text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+        <span class="error text-danger" th:if="${passwordError != null}" th:text="${passwordError}"></span>
 
         <div class="form-group mt-2">
             <input type="submit" value="Добавить" class="btn btn-success mt-2">

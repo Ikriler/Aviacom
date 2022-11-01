@@ -2,6 +2,7 @@ package com.iproject.aviacom.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.util.List;
 
 @Entity
@@ -16,6 +17,8 @@ public class Employee {
     private String surname;
     @NotBlank(message = "Поле не должно быть пустым")
     private String patronymic;
+    @Pattern(regexp = "^\\+[78]\\([0-9]{3}\\)[0-9]{3}-[0-9]{2}-[0-9]{2}$", message = "Телефон должен иметь вид +7(999)999-99-99")
+    @Column(unique = true)
     @NotBlank(message = "Поле не должно быть пустым")
     private String phone;
     @NotBlank(message = "Поле не должно быть пустым")

@@ -57,7 +57,7 @@ public class ClientController {
             return "client/add";
         }
         if(bindingResult.hasErrors() ||
-                !ValidatorService.checkNotExistsPassword(model, client.getPassportSeries(), client.getPassportNumber(), clientRepository, "passportError", client) ||
+                !ValidatorService.checkNotExistsPassport(model, client.getPassportSeries(), client.getPassportNumber(), clientRepository, "passportError", client) ||
                 !ValidatorService.checkNotExistsPhoneClient(model, client.getPhone(), clientRepository, "phoneError", client) )
         {
             return "client/add";
@@ -100,7 +100,7 @@ public class ClientController {
         }
         dbClient = clientRepository.findById(client.getId()).get();
         if(bindingResult.hasErrors() ||
-                !ValidatorService.checkNotExistsPassword(model, client.getPassportSeries(), client.getPassportNumber(), clientRepository, "passportError", client) ||
+                !ValidatorService.checkNotExistsPassport(model, client.getPassportSeries(), client.getPassportNumber(), clientRepository, "passportError", client) ||
                 !ValidatorService.checkNotExistsPhoneClient(model, client.getPhone(), clientRepository, "phoneError", client) )
         {
             return "client/edit";
