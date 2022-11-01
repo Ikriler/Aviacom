@@ -3,6 +3,7 @@ package com.iproject.aviacom.models;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -11,19 +12,24 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    @Size(max = 200, message = "Поле должно иметь меньше 200 символов")
     @NotBlank(message = "Поле не должно быть пустым")
     private String name;
+    @Size(max = 200, message = "Поле должно иметь меньше 200 символов")
     @NotBlank(message = "Поле не должно быть пустым")
     private String surname;
+    @Size(max = 200, message = "Поле должно иметь меньше 200 символов")
     @NotBlank(message = "Поле не должно быть пустым")
     private String patronymic;
     @Pattern(regexp = "^\\+[78]\\([0-9]{3}\\)[0-9]{3}-[0-9]{2}-[0-9]{2}$", message = "Телефон должен иметь вид +7(999)999-99-99")
     @Column(unique = true)
     @NotBlank(message = "Поле не должно быть пустым")
     private String phone;
+    @Size(max = 200, message = "Поле должно иметь меньше 200 символов")
     @NotBlank(message = "Поле не должно быть пустым")
     private String login;
 
+    @Lob
     private String password;
 
     @ManyToOne

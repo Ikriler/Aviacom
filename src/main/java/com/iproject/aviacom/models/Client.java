@@ -13,12 +13,16 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    @Size(max = 200, message = "Поле должно иметь меньше 200 символов")
     @NotBlank(message = "Поле не должно быть пустым")
     private String name;
+    @Size(max = 200, message = "Поле должно иметь меньше 200 символов")
     @NotBlank(message = "Поле не должно быть пустым")
     private String surname;
+    @Size(max = 200, message = "Поле должно иметь меньше 200 символов")
     @NotBlank(message = "Поле не должно быть пустым")
     private String patronymic;
+    @Size(max = 200, message = "Поле должно иметь меньше 200 символов")
     @NotBlank(message = "Поле не должно быть пустым")
     @Column(unique = true)
     private String email;
@@ -34,6 +38,7 @@ public class Client {
     @NotBlank(message = "Поле не должно быть пустым")
     private String passportNumber;
 
+    @Lob
     private String password;
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)

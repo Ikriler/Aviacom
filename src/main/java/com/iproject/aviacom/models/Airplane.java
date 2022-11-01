@@ -2,6 +2,7 @@ package com.iproject.aviacom.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -10,6 +11,7 @@ public class Airplane {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    @Size(max = 200, message = "Поле должно иметь меньше 200 символов")
     @NotBlank(message = "Поле не должно быть пустым")
     @Column(unique = true)
     private String model;
