@@ -22,19 +22,19 @@
 
         <div class="form-group mt-2">
             <label>Количество мест в эконом классе</label>
-            <input type="number" class="form-control mt-2" th:field="*{economicClassClientsCount}">
+            <input type="number" min="0" class="form-control mt-2" th:field="*{economicClassClientsCount}">
         </div>
         <span class="error text-danger" th:if="${#fields.hasErrors('economicClassClientsCount')}" th:errors="*{economicClassClientsCount}"></span>
 
         <div class="form-group mt-2">
             <label>Количество мест в бизнес классе</label>
-            <input type="number" class="form-control mt-2" th:field="*{businessClassClientsCount}">
+            <input type="number" min="0" class="form-control mt-2" th:field="*{businessClassClientsCount}">
         </div>
         <span class="error text-danger" th:if="${#fields.hasErrors('businessClassClientsCount')}" th:errors="*{businessClassClientsCount}"></span>
 
         <div class="form-group mt-2">
             <label>Количество мест в первом классе</label>
-            <input type="number" class="form-control mt-2" th:field="*{firstClassClientsCount}">
+            <input type="number" min="0" class="form-control mt-2" th:field="*{firstClassClientsCount}">
         </div>
         <span class="error text-danger" th:if="${#fields.hasErrors('firstClassClientsCount')}" th:errors="*{firstClassClientsCount}"></span>
 

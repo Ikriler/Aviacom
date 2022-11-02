@@ -39,13 +39,13 @@
 
         <div class="form-group mt-2">
             <label>Серия паспорта</label>
-            <input placeholder="Серия паспорта" type="number" class="form-control mt-2" th:field="*{passportSeries}">
+            <input placeholder="Серия паспорта" min="0" type="number" class="form-control mt-2" th:field="*{passportSeries}">
         </div>
         <span class="error text-danger" th:if="${#fields.hasErrors('passportSeries')}" th:errors="*{passportSeries}"></span>
 
         <div class="form-group mt-2">
             <label>Номер паспорта</label>
-            <input placeholder="Номер паспорта" type="number" class="form-control mt-2" th:field="*{passportNumber}">
+            <input placeholder="Номер паспорта" min="0" type="number" class="form-control mt-2" th:field="*{passportNumber}">
         </div>
         <span class="error text-danger" th:if="${#fields.hasErrors('passportNumber')}" th:errors="*{passportNumber}"></span>
 
