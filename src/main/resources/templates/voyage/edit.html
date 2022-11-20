@@ -17,13 +17,13 @@
         <input type="hidden" th:field="*{id}" th:value="${voyage.id}">
 
         <div class="form-group mt-2">
-            <label>Город отправления</label>
-            <select class="form-select mt-2" th:field="*{cityInc}">
-                <option th:each="c : ${cities}" th:value="${c.id}" th:text="${c.name}">
+            <label>Аэропорт отправления</label>
+            <select class="form-select mt-2" th:field="*{airportInc}">
+                <option th:each="a : ${airports}" th:value="${a.id}" th:text="${a.city.name + ' - ' +a.address}" th:selected="${voyage.airportInc.id == a.id}">
                 </option>
             </select>
         </div>
-        <span class="error text-danger" th:if="${#fields.hasErrors('cityInc')}" th:errors="*{cityInc}"></span>
+        <span class="error text-danger" th:if="${#fields.hasErrors('airportInc')}" th:errors="*{airportInc}"></span>
         <span class="error text-danger" th:if="${citiesError != null}" th:text="${citiesError}"></span>
 
 
@@ -38,13 +38,13 @@
         <span class="error text-danger" th:if="${datesError != null}" th:text="${datesError}"></span>
 
         <div class="form-group mt-2">
-            <label>Город прибытия</label>
-            <select class="form-select mt-2" th:field="*{cityOut}">
-                <option th:each="c : ${cities}" th:value="${c.id}" th:text="${c.name}">
+            <label>Аэропорт прибытия</label>
+            <select class="form-select mt-2" th:field="*{airportOut}">
+                <option th:each="a : ${airports}" th:value="${a.id}" th:text="${a.city.name + ' - ' +a.address}" th:selected="${voyage.airportOut.id == a.id}">
                 </option>
             </select>
         </div>
-        <span class="error text-danger" th:if="${#fields.hasErrors('cityOut')}" th:errors="*{cityOut}"></span>
+        <span class="error text-danger" th:if="${#fields.hasErrors('airportOut')}" th:errors="*{airportOut}"></span>
         <span class="error text-danger" th:if="${citiesError != null}" th:text="${citiesError}"></span>
 
         <div class="form-group mt-2">

@@ -31,6 +31,9 @@ public class City {
     @OneToMany(mappedBy = "cityOut", cascade = CascadeType.REMOVE)
     private List<Voyage> voyageListOut;
 
+    @OneToMany(mappedBy = "city", cascade = CascadeType.REMOVE)
+    private List<Airport> airportList;
+
     public City(String name, String description, Country country) {
         this.name = name;
         this.description = description;

@@ -21,7 +21,7 @@ public class SecurityConfig {
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/", "/main/tickets", "/login", "/logout", "/registration/**", "/static/**", "/images/**").permitAll()
-                .antMatchers("/country/**", "/city/**", "/airplane/**", "/voyage/**", "/ticket/**").hasAnyRole("ADMIN", "AIRDROME")
+                .antMatchers("/country/**", "/city/**", "/airplane/**", "/voyage/**", "/ticket/**", "/airport/**").hasAnyRole("ADMIN", "AIRDROME")
                 .antMatchers("/employee/**").hasAnyRole("ADMIN", "PERSONNEL")
                 .antMatchers("/client/**").hasAnyRole("ADMIN", "CASHIER", "BOOKING")
                 .antMatchers("/booking/**").hasAnyRole("ADMIN", "BOOKING")

@@ -10,6 +10,9 @@
             <li class="nav-item ms-3" th:if="${user.isAdmin().isAirdrome().CheckContains()}">
                 <a class="nav-link" th:href="@{/airplane}">Самолёты</a>
             </li>
+            <li class="nav-item ms-3" th:if="${user.isAdmin().isAirdrome().CheckContains()}">
+                <a class="nav-link" th:href="@{/airport}">Аэропорты</a>
+            </li>
             <li class="nav-item ms-3" th:if="${user.isAdmin().isPersonnel().CheckContains()}">
                 <a class="nav-link" th:href="@{/employee}">Сотрудники</a>
             </li>

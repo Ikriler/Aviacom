@@ -1,8 +1,10 @@
 package com.iproject.aviacom.controllers;
 
+import com.iproject.aviacom.models.Airport;
 import com.iproject.aviacom.models.City;
 import com.iproject.aviacom.models.Voyage;
 import com.iproject.aviacom.repositories.AirplaneRepository;
+import com.iproject.aviacom.repositories.AirportRepository;
 import com.iproject.aviacom.repositories.CityRepository;
 import com.iproject.aviacom.repositories.VoyageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,8 @@ public class VoyageController {
     CityRepository cityRepository;
     @Autowired
     AirplaneRepository airplaneRepository;
+    @Autowired
+    AirportRepository airportRepository;
 
     @GetMapping
     public String voyageList(@RequestParam(required = false) City cityInc,
@@ -70,6 +74,7 @@ public class VoyageController {
     @GetMapping("/add")
     public String voyageAddPage(@ModelAttribute("voyage") @Valid Voyage voyage, BindingResult bindingResult, Model model) {
         model.addAttribute("airplanes", airplaneRepository.findAll());
+        model.addAttribute("airports", airportRepository.findAll());
         model.addAttribute("cities", cityRepository.findAll());
         return "voyage/add";
     }
@@ -88,6 +93,7 @@ public class VoyageController {
         model.addAttribute("timeInc", timeInc);
         model.addAttribute("dateOut", dateOut);
         model.addAttribute("timeOut", timeOut);
+        model.addAttribute("airports", airportRepository.findAll());
 
 
         String dateTimeIncMessage = "";
@@ -104,7 +110,7 @@ public class VoyageController {
             model.addAttribute("dateTimeOutMessage", dateTimeOutMessage);
         }
 
-        if(voyage.getCityInc() == voyage.getCityOut()) {
+        if(voyage.getAirportInc().getCity() == voyage.getAirportOut().getCity()) {
             citiesError = "Города не должны совпадать";
             model.addAttribute("citiesError", citiesError);
         }
@@ -112,6 +118,9 @@ public class VoyageController {
         if(bindingResult.hasErrors() || dateTimeIncMessage != "" || dateTimeOutMessage != "" || citiesError != "") {
             return "voyage/add";
         }
+
+        voyage.setCityInc(voyage.getAirportInc().getCity());
+        voyage.setCityOut(voyage.getAirportOut().getCity());
 
         String dateTimeInc = dateInc + " " + timeInc;
         String dateTimeOut = dateOut + " " + timeOut;
@@ -144,6 +153,7 @@ public class VoyageController {
 
     @GetMapping("/edit")
     public String voyageEditPage(@RequestParam long voyage_id, Model model) {
+        model.addAttribute("airports", airportRepository.findAll());
         Voyage voyage = voyageRepository.findById(voyage_id).get();
         if(voyage == null) {
             return "redirect:/voyage";
@@ -184,6 +194,7 @@ public class VoyageController {
         model.addAttribute("timeInc", timeInc);
         model.addAttribute("dateOut", dateOut);
         model.addAttribute("timeOut", timeOut);
+        model.addAttribute("airports", airportRepository.findAll());
 
         String dateTimeIncMessage = "";
         String dateTimeOutMessage = "";
@@ -199,7 +210,7 @@ public class VoyageController {
             model.addAttribute("dateTimeOutMessage", dateTimeOutMessage);
         }
 
-        if(voyage.getCityInc() == voyage.getCityOut()) {
+        if(voyage.getAirportInc().getCity() == voyage.getAirportOut().getCity()) {
             citiesError = "Города не должны совпадать";
             model.addAttribute("citiesError", citiesError);
         }
@@ -207,6 +218,9 @@ public class VoyageController {
         if(bindingResult.hasErrors() || dateTimeIncMessage != "" || dateTimeOutMessage != "" || citiesError != "") {
             return "voyage/edit";
         }
+
+        voyage.setCityInc(voyage.getAirportInc().getCity());
+        voyage.setCityOut(voyage.getAirportOut().getCity());
 
         String dateTimeInc = dateInc + " " + timeInc;
         String dateTimeOut = dateOut + " " + timeOut;

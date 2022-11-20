@@ -1,9 +1,11 @@
 package com.iproject.aviacom.components;
 
 import com.iproject.aviacom.models.LayoutType;
+import com.iproject.aviacom.repositories.EmployeeRepository;
 import com.iproject.aviacom.repositories.LayoutTypeRepository;
 import com.iproject.aviacom.repositories.PostRepository;
 import com.iproject.aviacom.repositories.SeatClassRepository;
+import com.iproject.aviacom.seeders.EmployeeSeeder;
 import com.iproject.aviacom.seeders.LayoutTypeSeeder;
 import com.iproject.aviacom.seeders.PostSeeder;
 import com.iproject.aviacom.seeders.SeatClassSeeder;
@@ -21,11 +23,14 @@ public class updateListener {
     SeatClassRepository seatClassRepository;
     @Autowired
     PostRepository postRepository;
+    @Autowired
+    EmployeeRepository employeeRepository;
 
     @EventListener
     public void handleContextRefresh(ContextRefreshedEvent event) {
         LayoutTypeSeeder.seed(layoutTypeRepository);
         SeatClassSeeder.seed(seatClassRepository);
         PostSeeder.seed(postRepository);
+        EmployeeSeeder.seed(employeeRepository, postRepository);
     }
 }

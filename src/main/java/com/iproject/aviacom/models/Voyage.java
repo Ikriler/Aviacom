@@ -33,13 +33,24 @@ public class Voyage {
     private List<Ticket> tickets;
 
 
+    @ManyToOne
+    @JoinColumn(name = "airport_inc_id", referencedColumnName = "id")
+    private Airport airportInc;
 
-    public Voyage(City cityInc, City cityOut, Airplane airplane, String dateTimeInc, String dateTimeOut) {
+    @ManyToOne
+    @JoinColumn(name = "airport_out_id", referencedColumnName = "id")
+    private Airport airportOut;
+
+
+    public Voyage(City cityInc, City cityOut, Airplane airplane, String dateTimeInc, String dateTimeOut, List<Ticket> tickets, Airport airportInc, Airport airportOut) {
         this.cityInc = cityInc;
         this.cityOut = cityOut;
         this.airplane = airplane;
         this.dateTimeInc = dateTimeInc;
         this.dateTimeOut = dateTimeOut;
+        this.tickets = tickets;
+        this.airportInc = airportInc;
+        this.airportOut = airportOut;
     }
 
     public Voyage() {}
@@ -98,5 +109,21 @@ public class Voyage {
 
     public void setTickets(List<Ticket> tickets) {
         this.tickets = tickets;
+    }
+
+    public Airport getAirportInc() {
+        return airportInc;
+    }
+
+    public void setAirportInc(Airport airportInc) {
+        this.airportInc = airportInc;
+    }
+
+    public Airport getAirportOut() {
+        return airportOut;
+    }
+
+    public void setAirportOut(Airport airportOut) {
+        this.airportOut = airportOut;
     }
 }
