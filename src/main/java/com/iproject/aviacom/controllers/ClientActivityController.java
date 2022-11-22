@@ -75,7 +75,23 @@ public class ClientActivityController {
 
     @PostMapping("/booking/add")
     public String bookingAddPage(@ModelAttribute("ticket") Ticket ticket, Model model) throws ParseException {
+
         Client client = clientRepository.findByEmail(AuthService.getName());
+
+        if(client.getBookingList().stream().filter(b -> b.getTicket().getVoyage().getId() == ticket.getVoyage().getId()).toList().size() > 0) {
+            List<Ticket> ticketList = ticketRepository.findByBookingClient(client);
+            model.addAttribute("tickets", ticketList);
+            model.addAttribute("message", "У вас уже есть забронированный билет на этот рейс");
+            return "activity/booking/main";
+        }
+
+        if(client.getSaleList().stream().filter(b -> b.getTicket().getVoyage().getId() == ticket.getVoyage().getId()).toList().size() > 0) {
+            List<Ticket> ticketList = ticketRepository.findBySaleClient(client);
+            model.addAttribute("tickets", ticketList);
+            model.addAttribute("message", "У вас уже есть купленный билет на этот рейс");
+            return "activity/sale/main";
+        }
+
         Booking booking = new Booking();
         booking.setClient(client);
         booking.setTicket(ticket);
@@ -102,10 +118,16 @@ public class ClientActivityController {
         return "redirect:/activity/booking";
     }
 
-    @GetMapping("/sale/add")
-    public String saleAddPage(@ModelAttribute("ticket") Ticket ticket, Model model) {
+    @GetMapping("/sale/mainAdd")
+    public String saleMainAddPage(@ModelAttribute("ticket") Ticket ticket, Model model) {
         model.addAttribute("ticket", ticket);
-        return "activity/sale/add";
+        return "activity/sale/mainAdd";
+    }
+
+    @GetMapping("/sale/clearAdd")
+    public String saleClearAddPage(@ModelAttribute("ticket") Ticket ticket, Model model) {
+        model.addAttribute("ticket", ticket);
+        return "activity/sale/secondAdd";
     }
 
     @GetMapping("/sale")
@@ -126,7 +148,44 @@ public class ClientActivityController {
     }
 
     @PostMapping("/sale/add")
-    public String saleAdd(@ModelAttribute("ticket") Ticket ticket) {
+    public String saleAdd(@ModelAttribute("ticket") Ticket ticket, Model model) {
+        Client client = clientRepository.findByEmail(AuthService.getName());
+        Sale sale = new Sale();
+
+        Ticket ticketDB = ticketRepository.findById(ticket.getId()).get();
+
+        if(client.getSaleList().stream().filter(b -> b.getTicket().getVoyage().getId() == ticketDB.getVoyage().getId()).toList().size() > 0) {
+            List<Ticket> ticketList = ticketRepository.findBySaleClient(client);
+            model.addAttribute("tickets", ticketList);
+            model.addAttribute("message", "У вас уже есть купленный билет на этот рейс");
+            return "activity/sale/main";
+        }
+
+        if(client.getBookingList().stream().filter(b -> b.getTicket().getVoyage().getId() == ticketDB.getVoyage().getId()).toList().size() > 0) {
+            List<Ticket> ticketList = ticketRepository.findByBookingClient(client);
+            model.addAttribute("tickets", ticketList);
+            model.addAttribute("message", "У вас уже есть забронированный билет на этот рейс");
+            return "activity/booking/main";
+        }
+
+        Booking booking = bookingRepository.findByTicket(ticket);
+
+        if(booking != null) {
+            bookingRepository.delete(booking);
+        }
+
+        String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        sale.setTicket(ticket);
+        sale.setClient(client);
+        sale.setSaleDate(date);
+
+        saleRepository.save(sale);
+
+        return "redirect:/activity/sale";
+    }
+
+    @PostMapping("/sale/clearAdd")
+    public String saleClearAdd(@ModelAttribute("ticket") Ticket ticket, Model model) {
         Client client = clientRepository.findByEmail(AuthService.getName());
         Sale sale = new Sale();
 
