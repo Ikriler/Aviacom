@@ -9,12 +9,41 @@
 <body>
     <div th:insert="components/header"></div>
 
-    <div class="d-flex flex-column align-items-center justify-content-center mt-3">
+    <div class="d-flex flex-row align-items-center justify-content-center mt-3">
         <form method="get" th:action="@{/backup/downloadSQL}"
               class="form-horizontal d-flex flex-column align-items-center justify-content-center col-sm-4">
             <input type="submit" value="Скачать скрипт" class="btn btn-success">
         </form>
+        <form method="get" th:action="@{/backup/createDump}"
+              class="form-horizontal d-flex flex-column align-items-center justify-content-center col-sm-4">
+            <input type="submit" value="Создать резервную копию" class="btn btn-success">
+        </form>
     </div>
 
+    <div class="d-flex flex-column align-items-center justify-content-center mt-3">
+        <div class="col-sm-6">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th scope="col" class="text-center">Название</th>
+                    <th scope="col" class="text-center">Удалить</th>
+                    <th scope="col" class="text-center">Восстановить</th>
+                </tr>
+                </thead>
+                <tr th:each="f : ${restoreFiles}">
+                    <form>
+                        <input type="hidden" th:value="${f}" name="filename">
+                        <td scope="col" class="text-center"><span class="h3" th:text="${f}"></span></td>
+                        <td scope="col" class="text-center"><input type="submit" value="Удалить" class="btn btn-danger ml-2"
+                                                                   th:formaction="@{/backup/deleteDump}" formmethod="post">
+                        </td>
+                        <td scope="col" class="text-center"><input type="submit" value="Восстановить"
+                                                                   th:formaction="@{/backup/restore}" formmethod="post"
+                                                                   class="btn btn-primary ml-2"></td>
+                    </form>
+                </tr>
+            </table>
+        </div>
+    </div>
 </body>
 </html>
