@@ -15,7 +15,7 @@
     <p class="display-5 p-2">Список рейсов</p>
     <span class="error text-danger" th:if="${message != null}" th:text="${message}"></span>
     <form method="get" th:action="@{/}"
-          class="form-horizontal d-flex flex-row align-items-center justify-content-between col-sm-6">
+          class="form-horizontal d-flex flex-row align-items-center justify-content-between col-sm-8">
         <div class="form-group mt-2">
             <label>Город отправления</label>
             <select class="form-select mt-2" name="cityInc">
@@ -78,6 +78,5 @@
         </table>
     </div>
 </div>
-
 </body>
 </html>

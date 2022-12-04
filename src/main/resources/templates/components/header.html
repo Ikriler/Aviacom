@@ -31,6 +31,9 @@
             <li class="nav-item ms-3" th:if="${user.isAdmin().isCashier().CheckContains()}">
                 <a class="nav-link" th:href="@{/sale}">Продажа билетов</a>
             </li>
+            <li class="nav-item ms-3" th:if="${user.isAdmin().CheckContains()}">
+                <a class="nav-link" th:href="@{/backup}">Управление БД</a>
+            </li>
         </ul>
     </div>
     <div>

@@ -23,6 +23,8 @@ public class SecurityConfig {
                 .antMatchers("/", "/main/tickets", "/login", "/logout", "/registration/**", "/static/**", "/images/**").permitAll()
                 .antMatchers("/country/**", "/city/**", "/airplane/**", "/voyage/**", "/ticket/**", "/airport/**").hasAnyRole("ADMIN", "AIRDROME")
                 .antMatchers("/employee/**").hasAnyRole("ADMIN", "PERSONNEL")
+                .antMatchers("/backup/**").hasAnyRole("ADMIN")
+                .antMatchers("/static/dumps/**").hasAnyRole("ADMIN")
                 .antMatchers("/client/**").hasAnyRole("ADMIN", "CASHIER", "BOOKING")
                 .antMatchers("/booking/**").hasAnyRole("ADMIN", "BOOKING")
                 .antMatchers("/sale/**").hasAnyRole("ADMIN", "CASHIER")

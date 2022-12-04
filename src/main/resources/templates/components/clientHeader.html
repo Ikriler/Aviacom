@@ -1,27 +1,28 @@
 <nav class="nav navbar-expand-lg navbar-dark bg-dark p-3 justify-content-between"  xmlns:th="http://www.thymeleaf.org">
-  <div>
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item ms-3">
-        <a class="nav-link" th:href="@{/}">Главная</a>
-      </li>
-      <li class="nav-item ms-3" th:if="${user.isClient.CheckContains()}">
-        <a class="nav-link" th:href="@{/activity/profile}">Профиль</a>
-      </li>
-      <li class="nav-item ms-3" th:if="${user.isClient.CheckContains()}">
-        <a class="nav-link" th:href="@{/activity/sale}">Купленные билеты</a>
-      </li>
-      <li class="nav-item ms-3" th:if="${user.isClient.CheckContains()}">
-        <a class="nav-link" th:href="@{/activity/booking}">Забронированные билеты</a>
-      </li>
-    </ul>
-  </div>
-  <div>
-    <div th:if="${!user.isNone().CheckContains()}">
-      <a th:href="@{/logout}" class="btn btn-primary">Выйти</a>
+    <div>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item ms-3">
+                <a class="nav-link" th:href="@{/}">Главная</a>
+            </li>
+            <li class="nav-item ms-3" th:if="${user.isClient.CheckContains()}">
+                <a class="nav-link" th:href="@{/activity/profile}">Профиль</a>
+            </li>
+            <li class="nav-item ms-3" th:if="${user.isClient.CheckContains()}">
+                <a class="nav-link" th:href="@{/activity/sale}">Купленные билеты</a>
+            </li>
+            <li class="nav-item ms-3" th:if="${user.isClient.CheckContains()}">
+                <a class="nav-link" th:href="@{/activity/booking}">Забронированные билеты</a>
+            </li>
+        </ul>
     </div>
-    <div th:if="${user.isNone().CheckContains()}">
-      <a th:href="@{/login}" class="btn btn-primary">Войти</a>
-      <a th:href="@{/registration}" class="btn btn-primary">Регистрация</a>
+    <div>
+        <div th:if="${!user.isNone().CheckContains()}">
+            <a th:href="@{/logout}" class="btn btn-primary">Выйти</a>
+        </div>
+        <div th:if="${user.isNone().CheckContains()}">
+            <a th:href="@{/login}" class="btn btn-primary">Войти</a>
+            <a th:href="@{/registration}" class="btn btn-primary">Регистрация</a>
+        </div>
     </div>
-  </div>
+
 </nav>
