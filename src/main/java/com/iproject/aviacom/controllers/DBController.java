@@ -60,8 +60,11 @@ public class DBController {
     @GetMapping("downloadSQL")
     @Deprecated
     public ResponseEntity<Resource> downloadDB(HttpServletResponse response) {
-        String command = String.format("mysqldump -u %s --databases %s > %s",
-                DBConfig.username, DBConfig.dbname, "load/" + DBConfig.dbname + ".sql");
+        DBConfig.initField();
+        String command = String.format("mysqldump --no-tablespaces --column-statistics=0 -u%s -p%s -h%s %s > %s",
+                DBConfig.username, DBConfig.password, DBConfig.host, DBConfig.dbname, "load/" + DBConfig.dbname + ".sql");
+
+        //String command2 = "mysqldump --no-tablespaces --column-statistics=0 -uf0723938_aviacom -pJ3FnBfhM -hf0723938.xsph.ru f0723938_aviacom > load/f0723938_aviacom.sql";
         try {
             ConsoleService.exec(command);
             String uri = Paths.get("load/" + DBConfig.dbname + ".sql").toUri().toString();
@@ -82,10 +85,11 @@ public class DBController {
     @GetMapping("createDump")
     @Deprecated
     public String createDump(Model model) {
+        DBConfig.initField();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss_");
         String filename = sdf.format(new Date()) + "aviacom.sql";
-        String command = String.format("mysqldump -u %s --databases %s > %s",
-                DBConfig.username, DBConfig.dbname, "dumps/" + filename);
+        String command = String.format("mysqldump --column-statistics=0 -u%s -p%s -h%s --databases %s > %s",
+                DBConfig.username, DBConfig.password, DBConfig.host, DBConfig.dbname, "dumps/" + filename);
         try {
             ConsoleService.exec(command);
             model.addAttribute("restoreFiles", getRestoreList());
@@ -111,10 +115,11 @@ public class DBController {
     @PostMapping("restore")
     @Deprecated
     public String restore(Model model, @RequestParam("filename") String filename) throws IOException {
-
+        DBConfig.initField();
         File file = new File(Paths.get("dumps/" + filename).toUri());
 
-        String command = String.format("mysql -u %s --one-database %s < %s", DBConfig.username, DBConfig.dbname , file.toPath());
+        String command = String.format("mysql -u%s -p%s -h%s %s < %s",
+                DBConfig.username, DBConfig.password, DBConfig.host, DBConfig.dbname , file.toPath());
 
 
         try {
