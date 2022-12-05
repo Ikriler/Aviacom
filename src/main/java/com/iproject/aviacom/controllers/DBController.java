@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import org.springframework.core.io.Resource;
@@ -115,21 +116,38 @@ public class DBController {
     @PostMapping("restore")
     @Deprecated
     public String restore(Model model, @RequestParam("filename") String filename) throws IOException {
+        restore(filename, "dumps", model);
+        return "backup/main";
+    }
+
+    private void restore(String filename, String folder,  Model model) {
         DBConfig.initField();
-        File file = new File(Paths.get("dumps/" + filename).toUri());
+        File file = new File(Paths.get( folder + "/" + filename).toUri());
 
         String command = String.format("mysql -u%s -p%s -h%s %s < %s",
                 DBConfig.username, DBConfig.password, DBConfig.host, DBConfig.dbname , file.toPath());
-
-
         try {
             ConsoleService.exec(command);
             model.addAttribute("restoreFiles", getRestoreList());
-            return "backup/main";
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @PostMapping("upload")
+    public String uploadRestore(Model model, @RequestParam("file")MultipartFile file) throws IOException {
+
+        Path path = Paths.get("load/" + "customDump.sql");
+
+        File customDump = new File(path.toUri());
+
+        FileOutputStream fos = new FileOutputStream(customDump);
+        fos.write(file.getBytes());
+        fos.close();
+
+        restore("customDump.sql", "load", model);
+        return "backup/main";
     }
 }

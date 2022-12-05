@@ -14,6 +14,11 @@
               class="form-horizontal d-flex flex-column align-items-center justify-content-center col-sm-4">
             <input type="submit" value="Скачать скрипт" class="btn btn-success">
         </form>
+        <form method="post" th:action="@{/backup/upload}" enctype="multipart/form-data"
+              class="form-horizontal d-flex flex-row align-items-center justify-content-center col-sm-4">
+            <input type="file" name="file" class="form-control col-sm-1" accept=".sql">
+            <input type="submit" value="Загрузить резервную копию" class="btn btn-info text-white">
+        </form>
         <form method="get" th:action="@{/backup/createDump}"
               class="form-horizontal d-flex flex-column align-items-center justify-content-center col-sm-4">
             <input type="submit" value="Создать резервную копию" class="btn btn-success">

@@ -16,6 +16,14 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Current Database: `f0723938_aviacom`
+--
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `f0723938_aviacom` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */;
+
+USE `f0723938_aviacom`;
+
+--
 -- Table structure for table `airplane`
 --
 
@@ -560,4 +568,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-05 23:16:44
+-- Dump completed on 2022-12-05 23:15:18
