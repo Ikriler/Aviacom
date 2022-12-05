@@ -1,5 +1,6 @@
 package com.iproject.aviacom.controllers;
 
+import com.iproject.aviacom.configs.DBConfig;
 import com.iproject.aviacom.services.ConsoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
@@ -60,10 +61,10 @@ public class DBController {
     @Deprecated
     public ResponseEntity<Resource> downloadDB(HttpServletResponse response) {
         String command = String.format("mysqldump -u %s --databases %s > %s",
-                "root", "aviacom", "load/aviacom.sql");
+                DBConfig.username, DBConfig.dbname, "load/" + DBConfig.dbname + ".sql");
         try {
             ConsoleService.exec(command);
-            String uri = Paths.get("load/aviacom.sql").toUri().toString();
+            String uri = Paths.get("load/" + DBConfig.dbname + ".sql").toUri().toString();
             Resource resource = resourceLoader.getResource(uri);
             System.out.println(uri);
             ResponseEntity<Resource> body = ResponseEntity.ok()
@@ -84,7 +85,7 @@ public class DBController {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss_");
         String filename = sdf.format(new Date()) + "aviacom.sql";
         String command = String.format("mysqldump -u %s --databases %s > %s",
-                "root", "aviacom", "dumps/" + filename);
+                DBConfig.username, DBConfig.dbname, "dumps/" + filename);
         try {
             ConsoleService.exec(command);
             model.addAttribute("restoreFiles", getRestoreList());
@@ -113,7 +114,7 @@ public class DBController {
 
         File file = new File(Paths.get("dumps/" + filename).toUri());
 
-        String command = String.format("mysql -u %s --one-database aviacom < %s", "root", file.toPath());
+        String command = String.format("mysql -u %s --one-database %s < %s", DBConfig.username, DBConfig.dbname , file.toPath());
 
 
         try {

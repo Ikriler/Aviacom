@@ -9,8 +9,6 @@
 <body>
 <div th:insert="components/clientHeader"></div>
 
-<span class="error text-danger" th:if="${message != null}" th:text="${message}"></span>
-
 <search class="d-flex flex-column align-items-center mt-3">
     <p class="display-5 p-2">Список рейсов</p>
     <span class="error text-danger" th:if="${message != null}" th:text="${message}"></span>

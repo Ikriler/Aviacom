@@ -1,8 +1,14 @@
 package com.iproject.aviacom.controllers;
 
+import com.iproject.aviacom.configs.DBConfig;
 import com.iproject.aviacom.models.*;
 import com.iproject.aviacom.repositories.*;
+import com.iproject.aviacom.services.ConsoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +16,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -27,6 +35,8 @@ public class SaleController {
     SaleRepository saleRepository;
     @Autowired
     EmployeeRepository employeeRepository;
+    @Autowired
+    private ResourceLoader resourceLoader;
 
     @GetMapping
     public String saleList(@RequestParam(required = false) String listType,
@@ -92,5 +102,29 @@ public class SaleController {
             saleRepository.delete(ticket.getSale());
         }
         return "redirect:/sale";
+    }
+
+    @GetMapping("/report")
+    @Deprecated
+    public ResponseEntity<Resource> getReport() {
+        String tableName = "sale";
+        String command = String.format("mysql -u %s %s -e \"SELECT * FROM %s LEFT JOIN ticket ON ticket.id = sale.ticket_id\" > %s",
+                DBConfig.username, DBConfig.dbname, tableName, "load/" + tableName + ".xls");
+
+        try {
+            ConsoleService.exec(command);
+            String uri = Paths.get("load/" + tableName + ".xls").toUri().toString();
+            org.springframework.core.io.Resource resource = resourceLoader.getResource(uri);
+            System.out.println(uri);
+            ResponseEntity<org.springframework.core.io.Resource> body = ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + resource.getFilename())
+                    .contentLength(resource.contentLength())
+                    .body(resource);
+            return body;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

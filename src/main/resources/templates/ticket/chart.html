@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="/static/css/ticket/main.css">
+    <title>График</title>
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<div th:insert="components/header"></div>
+
+<div>
+    <canvas id="myChart"></canvas>
+</div>
+
+<script th:inline="javascript">
+    var sales = /*[[${sales}]]*/;
+    var bookings = /*[[${bookings}]]*/;
+</script>
+<script>
+  const ctx = document.getElementById('myChart');
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Продажи', 'Бронирование'],
+      datasets: [{
+        label: 'Продажи и бронирование билетов',
+        data: [sales, bookings],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>
+
+</body>
+</html>

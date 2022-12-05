@@ -1,9 +1,7 @@
 package com.iproject.aviacom.controllers;
 
 import com.iproject.aviacom.models.Voyage;
-import com.iproject.aviacom.repositories.SeatClassRepository;
-import com.iproject.aviacom.repositories.TicketRepository;
-import com.iproject.aviacom.repositories.VoyageRepository;
+import com.iproject.aviacom.repositories.*;
 import com.iproject.aviacom.services.TicketService;
 import com.iproject.aviacom.services.ValidatorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +22,10 @@ public class TicketController {
     VoyageRepository voyageRepository;
     @Autowired
     SeatClassRepository seatClassRepository;
+    @Autowired
+    SaleRepository saleRepository;
+    @Autowired
+    BookingRepository bookingRepository;
 
     @GetMapping
     public String ticketList(@RequestParam(required = false) Voyage voyage, Model model, HttpSession session) {
@@ -101,6 +103,13 @@ public class TicketController {
             TicketService.changePrice(priceDouble, voyage.getTickets(), ticketRepository);
         }
         return "redirect:/ticket";
+    }
+
+    @GetMapping("/chart")
+    public String showChart(Model model) {
+        model.addAttribute("sales", ((List) saleRepository.findAll()).stream().count());
+        model.addAttribute("bookings", ((List) bookingRepository.findAll()).stream().count());
+        return "ticket/chart";
     }
 
 }
