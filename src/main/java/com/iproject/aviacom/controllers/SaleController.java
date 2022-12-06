@@ -107,9 +107,11 @@ public class SaleController {
     @GetMapping("/report")
     @Deprecated
     public ResponseEntity<Resource> getReport() {
+        DBConfig.initField();
         String tableName = "sale";
-        String command = String.format("mysql -u %s %s -e \"SELECT * FROM %s LEFT JOIN ticket ON ticket.id = sale.ticket_id\" > %s",
-                DBConfig.username, DBConfig.dbname, tableName, "load/" + tableName + ".xls");
+        String query = "SELECT ticket.voyage_id as 'Код рейса', sale_date as 'Дата продажи', ticket.price as 'Цена', ticket.seat as 'Место', seat_class.name as 'Класс места', concat(client.surname, ' ', client.name, ' ', client.patronymic) as 'ФИО клиента', client.phone as 'Контактные данные клиента', concat(employee.surname, ' ', employee.name, ' ', employee.patronymic) as 'ФИО сотрудника', employee.phone as 'Контактные данные сотрудника' FROM sale LEFT JOIN ticket ON ticket.id = sale.ticket_id LEFT JOIN client ON sale.client_id = client.id LEFT JOIN employee ON employee.id = sale.employee_id LEFT JOIN seat_class ON seat_class.id = ticket.seat_class_id;";
+        String command = String.format("mysql -u%s -p%s -h%s %s --default-character-set=utf8 -e \"%s\" > %s",
+                DBConfig.username, DBConfig.password, DBConfig.host, DBConfig.dbname, query, "load/" + tableName + ".xls");
 
         try {
             ConsoleService.exec(command);

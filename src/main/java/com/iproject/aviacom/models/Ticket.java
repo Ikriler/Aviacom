@@ -7,9 +7,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class Ticket {
 
     @Id
@@ -29,10 +26,10 @@ public class Ticket {
     @Column(name = "seat")
     private String seat;
 
-    @OneToOne(optional = true, mappedBy = "ticket", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @OneToOne(optional = true, mappedBy = "ticket", cascade = CascadeType.REMOVE)
     private Booking booking;
 
-    @OneToOne(optional = true, mappedBy = "ticket", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @OneToOne(optional = true, mappedBy = "ticket", cascade = CascadeType.REMOVE)
     private Sale sale;
 
     public Ticket(Voyage voyage, SeatClass seatClass, Double price, String seat) {
@@ -41,6 +38,8 @@ public class Ticket {
         this.price = price;
         this.seat = seat;
     }
+
+    public Ticket() {}
 
     public long getId() {
         return id;
