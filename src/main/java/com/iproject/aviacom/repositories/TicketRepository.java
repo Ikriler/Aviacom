@@ -4,7 +4,10 @@ import com.iproject.aviacom.models.Booking;
 import com.iproject.aviacom.models.Client;
 import com.iproject.aviacom.models.Ticket;
 import com.iproject.aviacom.models.Voyage;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

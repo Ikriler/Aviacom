@@ -16,6 +16,7 @@ import org.springframework.core.io.Resource;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.constraints.Null;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -60,11 +61,13 @@ public class DBController {
 
     @GetMapping("downloadSQL")
     @Deprecated
-    public ResponseEntity<Resource> downloadDB(HttpServletResponse response) {
+    public ResponseEntity<Resource> downloadDB(HttpServletResponse response, @RequestParam(value = "withData", required = false) Boolean withData) {
         DBConfig.initField();
         String command = String.format("mysqldump --no-tablespaces --column-statistics=0 -u%s -p%s -h%s %s > %s",
                 DBConfig.username, DBConfig.password, DBConfig.host, DBConfig.dbname, "load/" + DBConfig.dbname + ".sql");
-
+        if(withData == null) {
+            command += " --no-data";
+        }
         //String command2 = "mysqldump --no-tablespaces --column-statistics=0 -uf0723938_aviacom -pJ3FnBfhM -hf0723938.xsph.ru f0723938_aviacom > load/f0723938_aviacom.sql";
         try {
             ConsoleService.exec(command);

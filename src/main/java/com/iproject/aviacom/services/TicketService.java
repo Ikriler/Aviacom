@@ -45,24 +45,23 @@ public class TicketService {
 
         for(int seatNumber = 1; seatNumber <= amountCycle; seatNumber++) {
             for(int seatChar = 0; seatChar < seatsLine.length(); seatChar++) {
-                Ticket ticket = new Ticket();
+                SeatClass seatClass = null;
                 if(firstClass != 0) {
                     firstClass--;
-                    ticket.setPrice(price + price * firstSeatClass.getPrice() / 100);
-                    ticket.setSeatClass(firstSeatClass);
+                    //ticket.setPrice(price + price * firstSeatClass.getPrice() / 100);
+                    seatClass = firstSeatClass;
                 }
                 else if (businessClass != 0) {
                     businessClass--;
-                    ticket.setPrice(price + price * businessSeatClass.getPrice() / 100);
-                    ticket.setSeatClass(businessSeatClass);
+                    //ticket.setPrice(price + price * businessSeatClass.getPrice() / 100);
+                    seatClass = businessSeatClass;
                 }
                 else if(economicClass != 0){
                     economicClass--;
-                    ticket.setPrice(price + price * economicSeatClass.getPrice() / 100);
-                    ticket.setSeatClass(economicSeatClass);
+                    //ticket.setPrice(price + price * economicSeatClass.getPrice() / 100);
+                    seatClass = economicSeatClass;
                 }
-                ticket.setSeat(String.valueOf(seatNumber) + seatsLine.charAt(seatChar));
-                ticket.setVoyage(voyage);
+                Ticket ticket = new Ticket(voyage, seatClass, price, String.valueOf(seatNumber) + seatsLine.charAt(seatChar));
                 ticketRepository.save(ticket);
             }
         }

@@ -3,25 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/static/bootstrap/bootstrap.css">
-    <link rel="stylesheet" href="/static/css/airport/main.css">
+    <link rel="stylesheet" href="/static/css/backup/main.css">
     <title>БД</title>
 </head>
 <body>
     <div th:insert="components/header"></div>
 
-    <div class="d-flex flex-row align-items-center justify-content-center mt-3">
+    <div class="d-flex container flex-row align-items-center justify-content-center mt-3 col-sm-8">
         <form method="get" th:action="@{/backup/downloadSQL}"
-              class="form-horizontal d-flex flex-column align-items-center justify-content-center col-sm-4">
-            <input type="submit" value="Скачать скрипт" class="btn btn-success">
-        </form>
-        <form method="post" th:action="@{/backup/upload}" enctype="multipart/form-data"
-              class="form-horizontal d-flex flex-row align-items-center justify-content-center col-sm-4">
-            <input type="file" name="file" class="form-control col-sm-1" accept=".sql">
-            <input type="submit" value="Загрузить резервную копию" class="btn btn-info text-white">
+              class="form-horizontal d-flex flex-row align-items-center justify-content-between col-sm-4">
+            <div class="form-check">
+                <input class="form-check-input" name="withData" type="checkbox" value="1" id="flexCheckChecked" checked>
+                <label class="form-check-label" for="flexCheckChecked">
+                    Наличие данных
+                </label>
+            </div>
+            <input type="submit" value="Скачать скрипт" class="btn btn-success margin-left">
         </form>
         <form method="get" th:action="@{/backup/createDump}"
               class="form-horizontal d-flex flex-column align-items-center justify-content-center col-sm-4">
             <input type="submit" value="Создать резервную копию" class="btn btn-success">
+        </form>
+    </div>
+
+    <div class="d-flex flex-row align-items-center justify-content-center mt-3">
+        <form method="post" th:action="@{/backup/upload}" enctype="multipart/form-data"
+              class="form-horizontal d-flex flex-row align-items-center justify-content-center col-sm-4">
+            <input type="file" name="file" class="form-control col-sm-1" accept=".sql">
+            <input type="submit" value="Загрузить резервную копию" class="btn btn-info text-white">
         </form>
     </div>
 

@@ -1,13 +1,20 @@
 package com.iproject.aviacom.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Ticket {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private long id;
 
     @ManyToOne
@@ -17,15 +24,15 @@ public class Ticket {
     @ManyToOne
     @JoinColumn(name = "seat_class_id", referencedColumnName = "id")
     private SeatClass seatClass;
-
+    @Column(name = "price")
     private Double price;
-
+    @Column(name = "seat")
     private String seat;
 
-    @OneToOne(optional = true, mappedBy = "ticket", cascade = CascadeType.REMOVE)
+    @OneToOne(optional = true, mappedBy = "ticket", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private Booking booking;
 
-    @OneToOne(optional = true, mappedBy = "ticket", cascade = CascadeType.REMOVE)
+    @OneToOne(optional = true, mappedBy = "ticket", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private Sale sale;
 
     public Ticket(Voyage voyage, SeatClass seatClass, Double price, String seat) {
@@ -34,8 +41,6 @@ public class Ticket {
         this.price = price;
         this.seat = seat;
     }
-
-    public Ticket() {}
 
     public long getId() {
         return id;
