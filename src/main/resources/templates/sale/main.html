@@ -12,7 +12,7 @@
 <div class="d-flex flex-column align-items-center justify-content-center mt-3">
     <form method="get" th:action="@{/sale/report}"
           class="form-horizontal d-flex flex-column align-items-center justify-content-center col-sm-4">
-        <input type="submit" value="Скачать отчет" class="btn btn-success">
+        <a th:href="@{/sale/report}" class="btn btn-success">Скачать отчет</a>
     </form>
     <span class="error text-danger" th:if="${message != null}" th:text="${message}"></span>
 </div>

@@ -63,7 +63,7 @@ public class DBController {
     @Deprecated
     public ResponseEntity<Resource> downloadDB(HttpServletResponse response, @RequestParam(value = "withData", required = false) Boolean withData) {
         DBConfig.initField();
-        String command = String.format("mysqldump --no-tablespaces --column-statistics=0 -u%s -p%s -h%s %s > %s",
+        String command = String.format("mysqldump --no-tablespaces --column-statistics=0 -u%s -p%s -h%s %s --routines --triggers > %s",
                 DBConfig.username, DBConfig.password, DBConfig.host, DBConfig.dbname, "load/" + DBConfig.dbname + ".sql");
         if(withData == null) {
             command += " --no-data";
