@@ -82,10 +82,15 @@ public class SalesExcelExporter {
             Employee employee = sale.getEmployee();
 
             String ClientFIO = client.getSurname() + " " + client.getName() + " " + client.getPatronymic();
-            String EmployeeFIO = employee.getSurname() + " " + employee.getName() + " " + employee.getPatronymic();
+            String EmployeeFIO = "";
 
             String ClientInfoData = client.getPhone() + " - " + client.getEmail();
-            String EmployeeInfoData = employee.getPhone();
+            String EmployeeInfoData = "";
+
+            if(employee != null) {
+                EmployeeInfoData = employee.getPhone();
+                EmployeeFIO = employee.getSurname() + " " + employee.getName() + " " + employee.getPatronymic();
+            }
 
             createCell(row, columnCount++, String.valueOf(sale.getTicket().getVoyage().getId()), style);
             createCell(row, columnCount++, sale.getSaleDate(), style);
