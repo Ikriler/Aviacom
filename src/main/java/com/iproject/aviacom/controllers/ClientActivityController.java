@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -69,6 +70,9 @@ public class ClientActivityController {
     public String bookingList(Model model) {
         Client client = clientRepository.findByEmail(AuthService.getName());
         List<Ticket> ticketList = ticketRepository.findByBookingClient(client);
+        if(ticketList.size() == 0) {
+            model.addAttribute("message", "У вас нет забронированных билетов");
+        }
         model.addAttribute("tickets", ticketList);
         return "activity/booking/main";
     }
@@ -134,12 +138,27 @@ public class ClientActivityController {
     public String sale(Model model) {
         Client client = clientRepository.findByEmail(AuthService.getName());
         List<Ticket> ticketList = ticketRepository.findBySaleClient(client);
+        if(ticketList.size() == 0) {
+            model.addAttribute("message", "У вас нет купленных билетов");
+        }
         model.addAttribute("tickets", ticketList);
         return "activity/sale/main";
     }
 
     @PostMapping("/sale/delete")
-    public String saleDelete(@ModelAttribute("ticket") Ticket ticket) {
+    public String saleDelete(@ModelAttribute("ticket") Ticket ticket, Model model) throws ParseException {
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date voyageStartDate = dateFormatter.parse(ticket.getVoyage().getDateTimeInc());
+        Date currentDate = new Date();
+        if(currentDate.after(voyageStartDate)) {
+            Client client = clientRepository.findByEmail(AuthService.getName());
+            List<Ticket> ticketList = ticketRepository.findBySaleClient(client);
+            if(ticketList.size() == 0) {
+                model.addAttribute("message", "Рейс уже прошел, невозможно вернуть билет");
+            }
+            model.addAttribute("tickets", ticketList);
+            return "activity/sale/main";
+        }
         Sale sale = saleRepository.findByTicket(ticket);
         if(sale != null) {
             saleRepository.delete(sale);

@@ -111,27 +111,6 @@ public class SaleController {
 
     @GetMapping("/report")
     public ResponseEntity<Resource> getReport() throws IOException {
-//        DBConfig.initField();
-//        String tableName = "sale";
-//        String query = "SELECT ticket.voyage_id as 'Код рейса', sale_date as 'Дата продажи', ticket.price as 'Цена', ticket.seat as 'Место', seat_class.name as 'Класс места', concat(client.surname, ' ', client.name, ' ', client.patronymic) as 'ФИО клиента', client.phone as 'Контактные данные клиента', concat(employee.surname, ' ', employee.name, ' ', employee.patronymic) as 'ФИО сотрудника', employee.phone as 'Контактные данные сотрудника' FROM sale LEFT JOIN ticket ON ticket.id = sale.ticket_id LEFT JOIN client ON sale.client_id = client.id LEFT JOIN employee ON employee.id = sale.employee_id LEFT JOIN seat_class ON seat_class.id = ticket.seat_class_id;";
-//        String command = String.format("mysql -u%s -p%s -h%s %s --default-character-set=utf8 -e \"%s\" > %s",
-//                DBConfig.username, DBConfig.password, DBConfig.host, DBConfig.dbname, query, "load/" + tableName + ".xls");
-//
-//        try {
-//            ConsoleService.exec(command);
-//            String uri = Paths.get("load/" + tableName + ".xls").toUri().toString();
-//            org.springframework.core.io.Resource resource = resourceLoader.getResource(uri);
-//            System.out.println(uri);
-//            ResponseEntity<org.springframework.core.io.Resource> body = ResponseEntity.ok()
-//                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + resource.getFilename())
-//                    .contentLength(resource.contentLength())
-//                    .body(resource);
-//            return body;
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        } catch (InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
 
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
         String currentDateTime = dateFormatter.format(new Date());
@@ -144,8 +123,6 @@ public class SaleController {
         SalesExcelExporter excelExporter = new SalesExcelExporter(listSales);
 
         excelExporter.export(currentDateTime);
-
-        // return response;
 
         try {
             String uri = Paths.get("load/sales_" + currentDateTime + ".xlsx").toUri().toString();

@@ -18,7 +18,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import com.iproject.aviacom.enums.*;
@@ -47,22 +51,25 @@ public class MainController {
         model.addAttribute("dateInc", dateInc);
         model.addAttribute("dateOut", dateOut);
 
+        List<Voyage> voyageList = null;
+
         if(cityInc != null && cityOut != null) {
-            model.addAttribute("voyages", voyageRepository.findByCityIncAndCityOut(cityInc, cityOut));
+            voyageList = voyageRepository.findByCityIncAndCityOut(cityInc, cityOut);
         }
         else {
-            model.addAttribute("voyages", voyageRepository.findAll());
+            voyageList = (List<Voyage>) voyageRepository.findAll();
         }
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         if(cityInc != null && cityOut != null && dateInc != null && dateInc != "") {
             if(dateOut != null & dateOut != "") {
-                model.addAttribute("voyages", voyageRepository.findByCityIncAndCityOutAndDateTimeIncContainsAndDateTimeOutContains(cityInc, cityOut, dateInc, dateOut));
-                model.addAttribute("voyages", voyageRepository.findByCityIncAndCityOutAndDateTimeIncContains(cityInc, cityOut, dateInc));
+                voyageList = voyageRepository.findByCityIncAndCityOutAndDateTimeIncContainsAndDateTimeOutContains(cityInc, cityOut, dateInc, dateOut);
             }
             else {
-                model.addAttribute("voyages", voyageRepository.findByCityIncAndCityOutAndDateTimeIncContains(cityInc, cityOut, dateInc));
+                voyageList = voyageRepository.findByCityIncAndCityOutAndDateTimeIncContains(cityInc, cityOut, dateInc);
             }
         }
+        Collections.reverse(voyageList);
+        model.addAttribute("voyages", voyageList);
         model.addAttribute("cities", cityRepository.findAll());
         return "main";
     }
@@ -87,7 +94,7 @@ public class MainController {
     }
 
     @GetMapping("/main/tickets")
-    public String availableTickets(@ModelAttribute("voyage") Voyage voyage, Model model) {
+    public String availableTickets(@ModelAttribute("voyage") Voyage voyage, Model model) throws ParseException {
         Voyage dbVoyage = voyageRepository.findById(voyage.getId()).get();
         if(dbVoyage == null) {
             return "redirect:/";
@@ -97,6 +104,15 @@ public class MainController {
             model.addAttribute("voyages", voyageRepository.findAll());
             model.addAttribute("cities", cityRepository.findAll());
             model.addAttribute("message","Нет доступных билетов");
+            return "main";
+        }
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date voyageStartDate = dateFormatter.parse(voyage.getDateTimeInc());
+        Date currentDate = new Date();
+        if(currentDate.after(voyageStartDate)) {
+            model.addAttribute("voyages", voyageRepository.findAll());
+            model.addAttribute("cities", cityRepository.findAll());
+            model.addAttribute("message","Посадка на рейс уже закончилась");
             return "main";
         }
         model.addAttribute("tickets", ticketList);
