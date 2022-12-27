@@ -69,6 +69,9 @@ public class MainController {
             }
         }
         Collections.reverse(voyageList);
+        if(voyageList.size() == 0) {
+            model.addAttribute("message", "Рейсы не найдены");
+        }
         model.addAttribute("voyages", voyageList);
         model.addAttribute("cities", cityRepository.findAll());
         return "main";

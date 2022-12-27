@@ -16,6 +16,14 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Current Database: `aviacom`
+--
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `aviacom` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+
+USE `aviacom`;
+
+--
 -- Table structure for table `airplane`
 --
 
@@ -244,7 +252,7 @@ CREATE TABLE `hibernate_sequence` (
 
 LOCK TABLES `hibernate_sequence` WRITE;
 /*!40000 ALTER TABLE `hibernate_sequence` DISABLE KEYS */;
-INSERT INTO `hibernate_sequence` VALUES (817);
+INSERT INTO `hibernate_sequence` VALUES (813);
 /*!40000 ALTER TABLE `hibernate_sequence` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -327,7 +335,7 @@ CREATE TABLE `sale` (
 
 LOCK TABLES `sale` WRITE;
 /*!40000 ALTER TABLE `sale` DISABLE KEYS */;
-INSERT INTO `sale` VALUES (547,'2022-12-10',153,13,291),(813,'2022-12-23',549,13,292),(814,'2022-12-23',548,13,295),(815,'2022-12-23',153,13,683),(816,'2022-12-23',548,13,293);
+INSERT INTO `sale` VALUES (547,'2022-12-10',153,13,291);
 /*!40000 ALTER TABLE `sale` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -443,31 +451,6 @@ LOCK TABLES `voyage` WRITE;
 INSERT INTO `voyage` VALUES (26,'2022-11-13 21:32','2022-11-27 21:32',24,20,23,17,18),(154,'2022-11-22 13:32','2022-11-23 12:32',24,23,20,18,17),(550,'2022-12-23 21:35','2022-12-24 21:35',24,20,23,17,18);
 /*!40000 ALTER TABLE `voyage` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Dumping routines for database 'aviacom'
---
-/*!50003 DROP PROCEDURE IF EXISTS `Sales` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `Sales`(IN `start_date` DATE, IN `end_date` DATE)
-BEGIN
-
-SELECT * FROM sale WHERE sale.sale_date > start_date AND sale.sale_date < end_date;
-
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -478,4 +461,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-23 19:32:25
+-- Dump completed on 2022-12-23 18:59:25

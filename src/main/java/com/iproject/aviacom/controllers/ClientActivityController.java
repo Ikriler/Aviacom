@@ -156,6 +156,7 @@ public class ClientActivityController {
             if(ticketList.size() == 0) {
                 model.addAttribute("message", "Рейс уже прошел, невозможно вернуть билет");
             }
+            model.addAttribute("message", "Рейс уже прошел, невозможно вернуть билет");
             model.addAttribute("tickets", ticketList);
             return "activity/sale/main";
         }
